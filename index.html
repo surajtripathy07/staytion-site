@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Staytion Coliving — 30+ managed PG & coliving homes across Andheri East, Sakinaka and Powai, Mumbai. Furnished rooms ₹6,500–40,000/month, Wi-Fi & housekeeping included, 24x7 caretaker, zero brokerage. Chat on WhatsApp to check availability.">
+<title>Staytion Coliving</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root {
+    --ground: #FAFAF7;
+    --surface: #FFFFFF;
+    --ink: #1B2733;
+    --ink-soft: #4A5866;
+    --line: #DDE1E0;
+    --amber: #D98E04;
+    --amber-ink: #8A5A00;
+    --amber-soft: #FBF3DF;
+    --navy: #1B2733;
+    --navy-contrast: #F5F7F6;
+    --chip-bg: #FFF4D6;
+    --chip-border: #E4C36A;
+    --chip-ink: #7A5600;
+    --wa: #128C50;
+    --wa-ink: #FFFFFF;
+  }
+  :root:not([data-theme="light"]) { }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10161D;
+      --surface: #18202A;
+      --ink: #E8EAE6;
+      --ink-soft: #9AA7B2;
+      --line: #2A3540;
+      --amber: #F2B33D;
+      --amber-ink: #F2B33D;
+      --amber-soft: #2A2417;
+      --navy: #E8EAE6;
+      --navy-contrast: #131A22;
+      --chip-bg: #2E2610;
+      --chip-border: #6B5518;
+      --chip-ink: #EFC96B;
+      --wa: #1DA35F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #10161D;
+    --surface: #18202A;
+    --ink: #E8EAE6;
+    --ink-soft: #9AA7B2;
+    --line: #2A3540;
+    --amber: #F2B33D;
+    --amber-ink: #F2B33D;
+    --amber-soft: #2A2417;
+    --navy: #E8EAE6;
+    --navy-contrast: #131A22;
+    --chip-bg: #2E2610;
+    --chip-border: #6B5518;
+    --chip-ink: #EFC96B;
+    --wa: #1DA35F;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    line-height: 1.08;
+    margin: 0;
+    text-wrap: balance;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+  /* Top bar */
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--ground);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 14px; padding-bottom: 14px; gap: 16px;
+  }
+  .brand {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700; font-size: 26px; letter-spacing: 0.04em;
+    text-transform: uppercase; text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand .dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--amber); border: 3px solid var(--ink);
+    flex: none;
+  }
+  .topnav { display: flex; gap: 22px; font-size: 15px; font-weight: 500; }
+  .topnav a { text-decoration: none; color: var(--ink-soft); }
+  .topnav a:hover, .topnav a:focus-visible { color: var(--ink); }
+  @media (max-width: 720px) { .topnav { display: none; } }
+
+  .btn-wa {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--wa); color: var(--wa-ink);
+    font-weight: 600; font-size: 15.5px;
+    padding: 10px 18px; border-radius: 999px; text-decoration: none;
+    border: none;
+  }
+  .btn-wa:hover { filter: brightness(1.07); }
+  .btn-wa svg { flex: none; }
+  .btn-wa:focus-visible, .topnav a:focus-visible, .brand:focus-visible {
+    outline: 2px solid var(--amber); outline-offset: 3px;
+  }
+
+  /* Hero */
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); }
+  .hero .wrap { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 48px; align-items: end; }
+  @media (max-width: 820px) { .hero .wrap { grid-template-columns: 1fr; } }
+  .hero h1 {
+    font-size: clamp(52px, 9vw, 96px);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.01em;
+  }
+  .hero h1 .stop { color: var(--amber); }
+  .hero .sub { font-size: 19px; color: var(--ink-soft); max-width: 34em; margin: 18px 0 30px; }
+  .hero .cta-row { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .hero .cta-note { font-size: 14px; color: var(--ink-soft); }
+
+  .board {
+    background: var(--navy); color: var(--navy-contrast);
+    border-radius: 10px; padding: 22px 24px;
+    font-family: "Barlow Condensed", sans-serif;
+    display: grid; gap: 10px;
+  }
+  :root[data-theme="dark"] .board, .board { border: 1px solid var(--line); }
+  .board .row {
+    display: flex; justify-content: space-between; gap: 18px;
+    font-size: 19px; letter-spacing: 0.05em; text-transform: uppercase;
+    border-bottom: 1px dashed color-mix(in srgb, var(--navy-contrast) 25%, transparent);
+    padding-bottom: 9px;
+  }
+  .board .row:last-child { border-bottom: none; padding-bottom: 0; }
+  .board .row b { font-weight: 600; color: var(--amber); }
+
+  /* Section scaffolding */
+  section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .stopmark {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13.5px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber-ink);
+    margin-bottom: 14px;
+  }
+  .stopmark::before {
+    content: ""; width: 11px; height: 11px; border-radius: 50%;
+    background: var(--amber); flex: none;
+  }
+  .stopmark::after {
+    content: ""; height: 2px; flex: 0 0 42px; background: var(--amber);
+    opacity: 0.45;
+  }
+  section h2 { font-size: clamp(32px, 5vw, 44px); font-weight: 600; margin-bottom: 12px; }
+  .lede { color: var(--ink-soft); max-width: 40em; margin: 0 0 34px; }
+
+  /* Rooms */
+  .rooms { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  @media (max-width: 1000px) { .rooms { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .rooms { grid-template-columns: 1fr; } }
+  .room {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 26px 26px 24px; display: grid; gap: 8px; align-content: start;
+  }
+  .room h3 { font-size: 26px; font-weight: 600; }
+  .room .price {
+    font-size: 27px; font-weight: 700;
+    font-family: "Barlow Condensed", sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+  .room .price small { font-size: 17px; font-weight: 500; color: var(--ink-soft); font-family: "Barlow", sans-serif; }
+  .room ul { margin: 8px 0 0; padding-left: 20px; color: var(--ink-soft); }
+  .room li { margin: 4px 0; }
+
+  /* Amenities */
+  .amenities { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 34px; }
+  @media (max-width: 720px) { .amenities { grid-template-columns: 1fr; } }
+  .amenity { position: relative; padding-left: 30px; display: grid; gap: 4px; align-content: start; }
+  .amenity::before {
+    content: ""; position: absolute; left: 0; top: 7px;
+    width: 12px; height: 12px; background: var(--amber);
+  }
+  .amenity b { font-size: 18px; font-weight: 600; }
+  .amenity p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+  .addons {
+    margin: 34px 0 0; padding: 14px 18px;
+    border: 1px dashed var(--line); border-radius: 8px;
+    background: var(--surface); color: var(--ink-soft); font-size: 16px;
+    max-width: 46em;
+  }
+  .addons b { color: var(--ink); font-weight: 600; }
+
+  /* Route line */
+  .route {
+    display: flex; align-items: flex-start; gap: 0;
+    position: relative; margin-top: 40px;
+    overflow-x: auto; padding-bottom: 8px;
+  }
+  .routestop {
+    flex: 1 0 130px; position: relative;
+    padding-top: 26px; display: grid; gap: 2px;
+  }
+  .routestop::before {
+    content: ""; position: absolute; top: 5px; left: 0; right: 0;
+    height: 3px; background: var(--amber); opacity: 0.45;
+  }
+  .routestop:first-child::before { left: 6px; }
+  .routestop:last-child::before { right: auto; width: 7px; }
+  .routestop::after {
+    content: ""; position: absolute; top: 0; left: 6px;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: var(--surface); border: 3px solid var(--amber);
+  }
+  .routestop b {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 19px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .routestop span { font-size: 14px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+  .step { counter-increment: step; display: grid; gap: 6px; align-content: start; }
+  .step::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 30px; font-weight: 700; color: var(--amber);
+  }
+  .step h3 { font-size: 22px; font-weight: 600; }
+  .step p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+  /* Terms */
+  .terms ol { margin: 0; padding-left: 0; list-style: none; counter-reset: clause; max-width: 46em; }
+  .terms li {
+    counter-increment: clause;
+    padding: 18px 0 18px 58px; position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .terms li::before {
+    content: counter(clause, decimal-leading-zero);
+    position: absolute; left: 0; top: 16px;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 24px; font-weight: 600; color: var(--amber-ink);
+  }
+  .terms li b { display: block; font-weight: 600; margin-bottom: 2px; }
+  .terms li p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+  .chip {
+    display: inline-block; background: var(--chip-bg); color: var(--chip-ink);
+    border: 1px solid var(--chip-border); border-radius: 5px;
+    font-size: 13px; font-weight: 600; padding: 1px 8px; margin: 0 2px;
+    white-space: nowrap;
+  }
+  .draftnote {
+    background: var(--amber-soft); border: 1px solid var(--chip-border);
+    border-radius: 8px; padding: 12px 16px; font-size: 15px;
+    color: var(--chip-ink); max-width: 46em; margin-bottom: 28px;
+  }
+
+  /* Footer */
+  footer { padding: 48px 0 64px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
+  footer .fbrand { font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: 0.04em; }
+  footer .fmeta { color: var(--ink-soft); font-size: 15px; display: grid; gap: 6px; }
+  footer a { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="dot"></span>Staytion</a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#rooms">Rooms</a>
+      <a href="#location">Location</a>
+      <a href="#how">How it works</a>
+      <a href="#terms">Terms</a>
+    </nav>
+    <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.3.2-.5s0-.4 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7a11 11 0 0 0 4.3 3.8c.6.3 1.1.4 1.4.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
+      WhatsApp us
+    </a>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1>Your next stop:<br><span class="stop">Andheri East.</span></h1>
+      <p class="sub">Staytion runs 30+ fully managed coliving PGs across Andheri East and Powai — 300+ beds, zero brokerage, and a straight answer on WhatsApp within the day.</p>
+      <div class="cta-row">
+        <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.3.2-.5s0-.4 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7a11 11 0 0 0 4.3 3.8c.6.3 1.1.4 1.4.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
+          Check availability
+        </a>
+        <span class="cta-note">No forms, no brokers — chat directly with the owner's desk.</span>
+      </div>
+    </div>
+    <div class="board" aria-label="Quick facts">
+      <div class="row"><span>Where</span><b>Andheri E · Powai</b></div>
+      <div class="row"><span>Homes</span><b>30+ · 300+ beds</b></div>
+      <div class="row"><span>Rent</span><b>₹6,500–40,000 / mo</b></div>
+      <div class="row"><span>Currently for</span><b>Men</b></div>
+      <div class="row"><span>Brokerage</span><b>Zero</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="rooms">
+  <div class="wrap">
+    <p class="stopmark">Stop 01 · Rooms</p>
+    <h2>Affordable to premium, same care</h2>
+    <p class="lede">Furnished rooms from ₹6,500 to ₹40,000 a month — from shared savers to private luxury singles. Pick the comfort level; the service standard stays the same. Move in with a bag, not a truck.</p>
+    <div class="rooms">
+      <div class="room">
+        <h3>Saver</h3>
+        <p class="price">₹6,500–11,000 <small>/ month per bed</small></p>
+        <ul>
+          <li>3 &amp; 4 sharing rooms</li>
+          <li>Common washroom</li>
+          <li>The lowest cost of living in the area</li>
+        </ul>
+      </div>
+      <div class="room">
+        <h3>Comfort</h3>
+        <p class="price">₹11,000–16,000 <small>/ month per bed</small></p>
+        <ul>
+          <li>2 &amp; 3 sharing AC rooms</li>
+          <li>Common or attached washroom</li>
+          <li>Our most popular pick</li>
+        </ul>
+      </div>
+      <div class="room">
+        <h3>Premium</h3>
+        <p class="price">₹17,000–22,000 <small>/ month per bed</small></p>
+        <ul>
+          <li>Twin AC rooms</li>
+          <li>Attached washroom</li>
+          <li>Lake-view rooms in Powai</li>
+        </ul>
+      </div>
+      <div class="room">
+        <h3>Luxury</h3>
+        <p class="price">₹32,000–40,000 <small>/ month, whole room</small></p>
+        <ul>
+          <li>A twin AC room, entirely to yourself</li>
+          <li>Any twin with both beds free can go solo — double the bed rent, all the privacy</li>
+          <li>Right now in Sakinaka, Marol &amp; Powai</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="included">
+  <div class="wrap">
+    <p class="stopmark">Stop 02 · What you get</p>
+    <h2>Run like a home, not a hostel</h2>
+    <p class="lede">Every Staytion home is managed by us end to end — one rent, no surprise bills, and someone on site when you need them.</p>
+    <div class="amenities">
+      <div class="amenity">
+        <b>24×7 caretaker</b>
+        <p>On site round the clock — ad-hoc cleaning, small fixes and personal assistance whenever you need it.</p>
+      </div>
+      <div class="amenity">
+        <b>Cleaning &amp; Wi-Fi in the rent</b>
+        <p>Regular housekeeping and internet are part of the rent, not extra bills to chase.</p>
+      </div>
+      <div class="amenity">
+        <b>Fair electricity billing</b>
+        <p>You pay for what's actually used, split fairly — no padded flat charges.</p>
+      </div>
+      <div class="amenity">
+        <b>Fully equipped homes</b>
+        <p>AC, fridge, washing machine and water purifier in every flat.</p>
+      </div>
+    </div>
+    <p class="addons"><b>Optional add-ons:</b> laundry service and meal plans — ask on WhatsApp for current pricing.</p>
+  </div>
+</section>
+
+<section id="location">
+  <div class="wrap">
+    <p class="stopmark">Stop 03 · Locations</p>
+    <h2>All along the Andheri East–Powai line</h2>
+    <p class="lede">30+ homes clustered around JB Nagar, Marol, Chakala and Powai — short commutes to SEEPZ, MIDC, the airport belt, Hiranandani offices and BKC. Tell us where you work and we'll match you to the nearest home with a free bed.</p>
+    <div class="route" role="list" aria-label="Areas we operate in">
+      <div class="routestop" role="listitem"><b>Vile Parle</b><span>1 home</span></div>
+      <div class="routestop" role="listitem"><b>WEH Metro</b><span>2 homes · 50 m from the station</span></div>
+      <div class="routestop" role="listitem"><b>Chakala · Airport Rd</b><span>3 homes</span></div>
+      <div class="routestop" role="listitem"><b>JB Nagar</b><span>15 homes</span></div>
+      <div class="routestop" role="listitem"><b>Andheri East</b><span>2 homes</span></div>
+      <div class="routestop" role="listitem"><b>Marol</b><span>5 homes</span></div>
+      <div class="routestop" role="listitem"><b>Sakinaka</b><span>1 home</span></div>
+      <div class="routestop" role="listitem"><b>Powai</b><span>6 homes</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="stopmark">Stop 04 · How it works</p>
+    <h2>Three steps to move in</h2>
+    <div class="steps">
+      <div class="step">
+        <h3>Say hi on WhatsApp</h3>
+        <p>Tell us your move-in date and budget. We reply with what's actually free — real photos and videos of the exact room.</p>
+      </div>
+      <div class="step">
+        <h3>Visit or video-tour</h3>
+        <p>See the room in person, or take a video tour if you're moving from another city.</p>
+      </div>
+      <div class="step">
+        <h3>Book and move in</h3>
+        <p>Pay the token to hold your bed, complete the simple paperwork, and move in on your date.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="terms" class="terms">
+  <div class="wrap">
+    <p class="stopmark">Stop 05 · Terms</p>
+    <h2>Terms &amp; conditions</h2>
+    <p class="draftnote">Draft for review — items marked <span class="chip">confirm</span> are standard-practice placeholders awaiting Staytion's actual figures before this page goes live.</p>
+    <ol>
+      <li>
+        <b>Booking &amp; token</b>
+        <p>A bed is held only after the booking token is paid. The token adjusts against your first month's rent. Token amount: <span class="chip">confirm</span>.</p>
+      </li>
+      <li>
+        <b>Security deposit</b>
+        <p>A refundable security deposit of <span class="chip">confirm — e.g. 2 months' rent</span> is payable before move-in. It is returned at move-out after deducting unpaid dues or damages, within <span class="chip">confirm</span> days.</p>
+      </li>
+      <li>
+        <b>Rent</b>
+        <p>Rent is payable monthly in advance, due by the <span class="chip">confirm — e.g. 5th</span> of each month. Late payment may attract a late fee of <span class="chip">confirm</span>.</p>
+      </li>
+      <li>
+        <b>Notice period</b>
+        <p>Moving out requires <span class="chip">confirm — e.g. 30 days'</span> written notice on WhatsApp. Leaving without notice forfeits the deposit to the extent of the notice-period rent.</p>
+      </li>
+      <li>
+        <b>What rent includes</b>
+        <p>Rent covers the furnished bed, housekeeping, Wi-Fi and building maintenance. Electricity is billed separately at actual usage, split fairly within the room <span class="chip">confirm method — e.g. sub-meter</span>. Laundry and meal plans are optional paid add-ons <span class="chip">confirm rates</span>.</p>
+      </li>
+      <li>
+        <b>House rules</b>
+        <p>Residents are expected to keep shared spaces clean and respect co-residents' quiet hours. Smoking and alcohol inside the premises: <span class="chip">confirm policy</span>. Damage to property is charged at actuals.</p>
+      </li>
+      <li>
+        <b>Guests &amp; visitors</b>
+        <p>Visitor policy and timings: <span class="chip">confirm</span>. Overnight guests are not permitted unless approved in advance by management.</p>
+      </li>
+      <li>
+        <b>Documents</b>
+        <p>Government photo ID and basic KYC details are required at move-in, as mandated for PG accommodation.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <p class="fbrand">Staytion Coliving</p>
+      <p class="fmeta">Managed PG &amp; coliving · Andheri East &amp; Powai, Mumbai</p>
+    </div>
+    <div class="fmeta">
+      <span>WhatsApp: <a href="https://wa.me/918591204793">+91 85912 04793</a></span>
+      <span>Instagram: <a href="https://instagram.com/staytioncoliving">@staytioncoliving</a></span>
+      <span>Email: <a href="mailto:staytioncoliving@gmail.com">staytioncoliving@gmail.com</a></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
