@@ -115,6 +115,12 @@
   .topnav a { text-decoration: none; color: var(--ink-soft); }
   .topnav a:hover, .topnav a:focus-visible { color: var(--ink); }
   @media (max-width: 720px) { .topnav { display: none; } }
+  @media (max-width: 520px) {
+    .topbar .wrap { gap: 10px; }
+    .brand { font-size: 21px; gap: 8px; }
+    .brand .dot { width: 12px; height: 12px; border-width: 2.5px; }
+    .btn-wa { font-size: 14px; padding: 9px 14px; gap: 7px; }
+  }
 
   .btn-wa {
     display: inline-flex; align-items: center; gap: 9px;
@@ -279,12 +285,41 @@
     color: var(--chip-ink); max-width: 46em; margin-bottom: 28px;
   }
 
-  /* Hosts */
-  .hosts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-  @media (max-width: 820px) { .hosts { grid-template-columns: 1fr; } }
+  /* Hosts — the support line */
+  .hostline {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
+    position: relative; margin-top: 44px;
+  }
+  .hostline::before {
+    content: ""; position: absolute; top: 7px; left: 12%; right: 12%;
+    height: 3px; background: var(--amber); opacity: 0.45;
+  }
+  .hoststop { display: grid; gap: 18px; align-content: start; }
+  .hoststop .pin {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--surface); border: 4px solid var(--amber);
+    margin: 0 auto; position: relative; z-index: 1;
+  }
+  @media (max-width: 820px) {
+    .hostline { grid-template-columns: 1fr; }
+    .hostline::before {
+      left: 10px; right: auto; top: 10px; bottom: 10px;
+      width: 3px; height: auto;
+    }
+    .hoststop { grid-template-columns: 24px 1fr; gap: 12px; }
+    .hoststop .pin { margin: 4px 0 0 3px; }
+  }
   .host {
     background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
     padding: 24px; display: grid; gap: 8px; align-content: start;
+  }
+  .host .badge {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 3px solid var(--amber); background: var(--ground);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 27px; font-weight: 700;
+    margin-bottom: 6px;
   }
   .host-role {
     font-family: "Barlow Condensed", sans-serif;
@@ -327,8 +362,9 @@
     <a class="brand" href="#top"><span class="dot"></span>Staytion</a>
     <nav class="topnav" aria-label="Sections">
       <a href="#rooms">Rooms</a>
-      <a href="#location">Location</a>
+      <a href="#location">Locations</a>
       <a href="#how">How it works</a>
+      <a href="#hosts">Hosts</a>
       <a href="#terms">Terms</a>
     </nav>
     <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">
@@ -342,17 +378,17 @@
   <div class="wrap">
     <div>
       <h1>Your next stop:<br><span class="stop">Mumbai Suburbs.</span></h1>
-      <p class="sub">Staytion runs 30+ fully managed coliving PGs across Andheri East and Powai — 300+ beds, zero brokerage, and a straight answer on WhatsApp within the day.</p>
+      <p class="sub">Staytion runs 30+ fully managed coliving PGs across Mumbai's western suburbs — Andheri East, Sakinaka and Powai. 300+ beds, zero brokerage, and a straight answer on WhatsApp within the day.</p>
       <div class="cta-row">
         <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.1-.7l.4-.5c.1-.2.1-.3.2-.5s0-.4 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7a11 11 0 0 0 4.3 3.8c.6.3 1.1.4 1.4.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>
           Check availability
         </a>
-        <span class="cta-note">No forms, no brokers — chat directly with the owner's desk.</span>
+        <span class="cta-note">No forms, no brokers — chat directly with your hosts.</span>
       </div>
     </div>
     <div class="board" aria-label="Quick facts">
-      <div class="row"><span>Where</span><b>Andheri E · Powai</b></div>
+      <div class="row"><span>Where</span><b>Western Suburbs</b></div>
       <div class="row"><span>Homes</span><b>30+ · 300+ beds</b></div>
       <div class="row"><span>Rent</span><b>₹6,500–40,000 / mo</b></div>
       <div class="row"><span>Brokerage</span><b>Zero</b></div>
@@ -421,8 +457,8 @@
         <p>Regular housekeeping and internet are part of the rent, not extra bills to chase.</p>
       </div>
       <div class="amenity">
-        <b>Fair electricity billing</b>
-        <p>You pay for what's actually used, split fairly — no padded flat charges.</p>
+        <b>Metered electricity</b>
+        <p>AC power is metered per room — you pay exactly your own usage, never a padded flat rate.</p>
       </div>
       <div class="amenity">
         <b>Fully equipped homes</b>
@@ -437,7 +473,7 @@
   <div class="wrap">
     <p class="stopmark">Stop 03 · Locations</p>
     <h2>All along the Andheri East–Powai line</h2>
-    <p class="lede">30+ homes clustered around JB Nagar, Marol, Chakala and Powai — short commutes to SEEPZ, MIDC, the airport belt, Hiranandani offices and BKC. Tell us where you work and we'll match you to the nearest home with a free bed.</p>
+    <p class="lede">30+ homes clustered around JB Nagar, Marol, Chakala, Sakinaka and Powai — short commutes to SEEPZ, MIDC, the airport belt, Hiranandani offices and BKC. Tell us where you work and we'll match you to the nearest home with a free bed.</p>
     <div class="route" role="list" aria-label="Areas we operate in">
       <div class="routestop" role="listitem"><b>Vile Parle</b><span>1 home</span></div>
       <div class="routestop" role="listitem"><b>WEH Metro</b><span>2 homes · 50 m from the station</span></div>
@@ -466,7 +502,7 @@
       </div>
       <div class="step">
         <h3>Book and move in</h3>
-        <p>Pay the token to hold your bed, complete the simple paperwork, and move in on your date.</p>
+        <p>Pay the token to hold your bed, sign the agreement, and move in on your date. Everything you're agreeing to is spelled out in the <a href="/terms/">house terms</a> first.</p>
       </div>
     </div>
   </div>
@@ -475,26 +511,38 @@
 <section id="hosts">
   <div class="wrap">
     <p class="stopmark">Stop 05 · Know your hosts</p>
-    <h2>Three Tripathis, always one call away</h2>
-    <p class="lede">Every resident gets one of us as their host — one stable person who knows your name, your flat and your rent date. The other two are your fallbacks. Between the three of us, someone always picks up.</p>
-    <div class="hosts">
-      <div class="host">
-        <p class="host-role">The Godfather</p>
-        <h3>Mahendra Tripathi</h3>
-        <p>Started this legacy 10+ years ago with one flat and one rule: treat every tenant like family. Every Staytion home traces back to him.</p>
-        <a href="https://wa.me/919967966889">+91 99679 66889</a>
+    <h2>The Staytion support line</h2>
+    <p class="lede">Every resident gets one of us as their host — your home station, one person who knows your name, your flat and your rent date. No answer? Your call just moves down the line to the next host. It never stalls.</p>
+    <div class="hostline">
+      <div class="hoststop">
+        <div class="pin"></div>
+        <div class="host">
+          <div class="badge">M</div>
+          <p class="host-role">The Godfather</p>
+          <h3>Mahendra</h3>
+          <p>Started this legacy 10+ years ago with one flat and one rule: treat every tenant like family. Every Staytion home traces back to him.</p>
+          <a href="https://wa.me/919967966889">+91 99679 66889</a>
+        </div>
       </div>
-      <div class="host">
-        <p class="host-role">The Connector</p>
-        <h3>Vikas Tripathi</h3>
-        <p>Knows every building, caretaker and repairman in the suburbs. Visits, fixes, short-notice move-ins — Vikas is famous for getting it done.</p>
-        <a href="https://wa.me/919167759520">+91 91677 59520</a>
+      <div class="hoststop">
+        <div class="pin"></div>
+        <div class="host">
+          <div class="badge">V</div>
+          <p class="host-role">The Connector</p>
+          <h3>Vikas</h3>
+          <p>Knows every building, caretaker and repairman in the suburbs. Visits, fixes, short-notice move-ins — famous for getting it done.</p>
+          <a href="https://wa.me/919167759520">+91 91677 59520</a>
+        </div>
       </div>
-      <div class="host">
-        <p class="host-role">The Mastermind</p>
-        <h3>Suraj Tripathi</h3>
-        <p>The vision and the tech. Built the systems that keep bookings, rent and support running like clockwork — and keeps raising the bar on what a PG can be.</p>
-        <a href="https://wa.me/918591204793">+91 85912 04793</a>
+      <div class="hoststop">
+        <div class="pin"></div>
+        <div class="host">
+          <div class="badge">S</div>
+          <p class="host-role">The Mastermind</p>
+          <h3>Suraj</h3>
+          <p>The vision and the tech. Built the systems that keep bookings, rent and support running like clockwork — and keeps raising the bar on what a PG can be.</p>
+          <a href="https://wa.me/918591204793">+91 85912 04793</a>
+        </div>
       </div>
     </div>
     <div class="crew">
@@ -519,7 +567,7 @@
   <div class="wrap">
     <div>
       <p class="fbrand">Staytion Coliving</p>
-      <p class="fmeta">Managed PG &amp; coliving · Andheri East &amp; Powai, Mumbai</p>
+      <p class="fmeta">Managed PG &amp; coliving · Mumbai's Western Suburbs</p>
     </div>
     <div class="fmeta">
       <span>WhatsApp: <a href="https://wa.me/918591204793">+91 85912 04793</a></span>
