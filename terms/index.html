@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Staytion Coliving house terms — payments, notice and deposit settlement, paperwork, and the shared-living code every resident agrees to before moving in.">
+<title>Staytion House Terms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root {
+    --ground: #FAFAF7;
+    --surface: #FFFFFF;
+    --ink: #1B2733;
+    --ink-soft: #4A5866;
+    --line: #DDE1E0;
+    --amber: #D98E04;
+    --amber-ink: #8A5A00;
+    --amber-soft: #FBF3DF;
+    --wa: #128C50;
+    --wa-ink: #FFFFFF;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10161D;
+      --surface: #18202A;
+      --ink: #E8EAE6;
+      --ink-soft: #9AA7B2;
+      --line: #2A3540;
+      --amber: #F2B33D;
+      --amber-ink: #F2B33D;
+      --amber-soft: #2A2417;
+      --wa: #1DA35F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #10161D;
+    --surface: #18202A;
+    --ink: #E8EAE6;
+    --ink-soft: #9AA7B2;
+    --line: #2A3540;
+    --amber: #F2B33D;
+    --amber-ink: #F2B33D;
+    --amber-soft: #2A2417;
+    --wa: #1DA35F;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Barlow", "Helvetica Neue", Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2 {
+    font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+    line-height: 1.08;
+    margin: 0;
+    text-wrap: balance;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--ground);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 14px; padding-bottom: 14px; gap: 16px;
+  }
+  .brand {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700; font-size: 26px; letter-spacing: 0.04em;
+    text-transform: uppercase; text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand .dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--amber); border: 3px solid var(--ink);
+    flex: none;
+  }
+  .btn-wa {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--wa); color: var(--wa-ink);
+    font-weight: 600; font-size: 15.5px;
+    padding: 10px 18px; border-radius: 999px; text-decoration: none;
+  }
+  .btn-wa:hover { filter: brightness(1.07); }
+  .btn-wa:focus-visible, .brand:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
+  header.page { padding: 56px 0 36px; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13.5px; font-weight: 600; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber-ink);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: ""; width: 11px; height: 11px; border-radius: 50%;
+    background: var(--amber); flex: none;
+  }
+  header.page h1 { font-size: clamp(40px, 7vw, 62px); font-weight: 700; }
+  .intro { color: var(--ink-soft); max-width: 42em; margin: 16px 0 0; }
+  .updated { font-size: 14px; color: var(--ink-soft); margin: 14px 0 0; }
+
+  section { padding: 44px 0 10px; }
+  section h2 { font-size: clamp(26px, 4.5vw, 34px); font-weight: 600; margin-bottom: 4px; }
+  section > .wrap > p.note { color: var(--ink-soft); max-width: 42em; margin: 6px 0 8px; }
+
+  ol.clauses { margin: 0; padding: 0; list-style: none; }
+  ol.clauses li {
+    padding: 18px 0 18px 58px; position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  ol.clauses li::before {
+    content: attr(data-n);
+    position: absolute; left: 0; top: 16px;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 24px; font-weight: 600; color: var(--amber-ink);
+    font-variant-numeric: tabular-nums;
+  }
+  ol.clauses li b { display: block; font-weight: 600; margin-bottom: 2px; }
+  ol.clauses li p { margin: 0; color: var(--ink-soft); font-size: 16px; }
+
+  .accept {
+    margin: 48px 0 0; padding: 22px 24px;
+    background: var(--amber-soft); border: 1px solid var(--line); border-radius: 10px;
+  }
+  .accept p { margin: 0; font-size: 16px; }
+
+  footer { padding: 40px 0 64px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; color: var(--ink-soft); font-size: 15px; }
+  footer a { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="dot"></span>Staytion</a>
+    <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">WhatsApp us</a>
+  </div>
+</header>
+
+<header class="page">
+  <div class="wrap">
+    <p class="eyebrow">Staytion Coliving</p>
+    <h1>House terms</h1>
+    <p class="intro">Everything you're agreeing to when you book a Staytion bed — in plain language, before any money changes hands. The payment terms are firm so there are never surprises later; the living rules are simply what everyone sharing the home has agreed to keep. Your booking confirms you've read and accepted all of it.</p>
+    <p class="updated">Effective August 2026 · Applies to all Staytion homes unless your written agreement says otherwise</p>
+  </div>
+</header>
+
+<section id="before-you-book">
+  <div class="wrap">
+    <h2>Before you book</h2>
+    <ol class="clauses">
+      <li data-n="01">
+        <b>Lock-in — ask what applies to your room</b>
+        <p>Most rooms carry a <strong>6-month lock-in by default</strong>; some differ. Confirm the lock-in for your room before you book — the stay cannot be ended, and notice cannot be given, inside the lock-in period.</p>
+      </li>
+      <li data-n="02">
+        <b>Agreement and police verification are mandatory</b>
+        <p>Every resident signs an 11-month PG (leave &amp; licence) agreement and completes police verification — it's the law in Mumbai and it protects you as much as us. You'll need to provide your documents before move-in: Aadhaar, PAN, passport-size photos, and your permanent and office addresses.</p>
+      </li>
+      <li data-n="03">
+        <b>The agreement is not address proof</b>
+        <p>The PG agreement cannot be used for Aadhaar, passport, bank, credit-card or any other ID/address verification, and no permanent address or residence proof may be created at the flat's address.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="payments">
+  <div class="wrap">
+    <h2>Payments</h2>
+    <p class="note">These terms are fixed for everyone — they're what keeps rent predictable and the same rules applied to every resident.</p>
+    <ol class="clauses">
+      <li data-n="04">
+        <b>Token, booking and rent payments are non-refundable</b>
+        <p>Any payment made towards a token, booking or rent is non-refundable once made. A token holds your bed — so we turn other people away for you.</p>
+      </li>
+      <li data-n="05">
+        <b>Rent is monthly, in advance, on your rent date</b>
+        <p>Your rent date is the monthly anniversary of your move-in. Rent for the month ahead is due on that date.</p>
+      </li>
+      <li data-n="06">
+        <b>5 days' grace, then a late penalty</b>
+        <p>Rent paid within 5 days of your rent date is fine. Beyond that, a penalty of 1% of the monthly rent per day of delay applies.</p>
+      </li>
+      <li data-n="07">
+        <b>Electricity and food are not included in rent</b>
+        <p>Unless explicitly agreed in writing, rent covers your bed and building services — electricity and meals are separate. Meal and laundry add-ons are available; ask us for current pricing.</p>
+      </li>
+      <li data-n="08">
+        <b>AC electricity is metered at ₹15 per unit</b>
+        <p>AC usage is billed at ₹15 per metered unit. This rate is deliberately pegged to the highest slab electricity companies charge and is non-negotiable — heavy AC use is the single biggest cost swing in a shared flat, and metering it keeps bills fair for everyone else.</p>
+      </li>
+      <li data-n="09">
+        <b>Renewal after 11 months</b>
+        <p>Agreements run 11 months. On renewal, rent steps up by 7%.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="moving-out">
+  <div class="wrap">
+    <h2>Moving out</h2>
+    <ol class="clauses">
+      <li data-n="10">
+        <b>30 days' notice, given on your rent date</b>
+        <p>Notice must be 30 days, and it can only be given on your rent date — up to 5 days before or after it is fine. This keeps everyone's months whole and lets us line up the next resident without charging you for gaps.</p>
+      </li>
+      <li data-n="11">
+        <b>How the deposit settles in your last month</b>
+        <p>In your final month, half your deposit is adjusted against rent and you pay the remaining half of the rent. The balance deposit is returned after you vacate, once electricity and any pending dues are deducted — normally settled within 7 days. If your pending dues are likely to exceed the balance deposit, we may ask for the full last month's rent instead and settle the entire deposit after dues.</p>
+      </li>
+      <li data-n="12">
+        <b>Return every key you were given</b>
+        <p>All keys issued at move-in must be returned as-is when you vacate. Misplaced keys cost ₹500 per key for replacement.</p>
+      </li>
+      <li data-n="13">
+        <b>Leave it the way you'd want to find it</b>
+        <p>Hand your room and bed over clean — the same way they were ready for you on day one.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="living-together">
+  <div class="wrap">
+    <h2>Living together</h2>
+    <p class="note">These aren't our rules so much as the standing agreement between everyone who shares the home — each one exists because it protects a flatmate.</p>
+    <ol class="clauses">
+      <li data-n="14">
+        <b>No smoking or drinking in the flat</b>
+        <p>We live in shared spaces. What's harmless to you can be real discomfort to the person on the next bed — take it outside the home.</p>
+      </li>
+      <li data-n="15">
+        <b>Cooking only if agreed in writing</b>
+        <p>Unless explicitly confirmed in writing for your flat, cooking is strictly not allowed. Where meals matter to you, ask about our food add-on instead.</p>
+      </li>
+      <li data-n="16">
+        <b>Friends of the opposite gender don't enter the flat</b>
+        <p>This is a hard rule in the buildings we operate in. It protects your guest most of all — and your flatmates, who share the same address and the same society scrutiny. Please don't put a friend or a flatmate in that position.</p>
+      </li>
+      <li data-n="17">
+        <b>No overnight stays by visitors</b>
+        <p>Relatives, partners and friends cannot stay in the PG unless explicitly agreed by the owners in advance. Your flatmates signed up to live with you, not with your guests.</p>
+      </li>
+      <li data-n="18">
+        <b>No parties or gatherings of non-residents</b>
+        <p>Get-togethers of outsiders inside the flat need the owner's explicit agreement beforehand. Flatmates have exams, early shifts and their own lives — be mindful of how a crowd lands on them.</p>
+      </li>
+      <li data-n="19">
+        <b>Cleanliness is everyone's job</b>
+        <p>Housekeeping covers the common areas, but a shared home stays livable because each person keeps their own space — and anything they use — clean.</p>
+      </li>
+      <li data-n="20">
+        <b>You break it, you cover it</b>
+        <p>Any loss or damage you cause to PG property or a fellow resident's belongings is yours to make good.</p>
+      </li>
+      <li data-n="21">
+        <b>Your valuables are your responsibility</b>
+        <p>Keep laptops, phones, watches and other valuables secured. The PG is not responsible for loss of personal belongings left open in shared rooms.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="the-building">
+  <div class="wrap">
+    <h2>The building</h2>
+    <ol class="clauses">
+      <li data-n="22">
+        <b>The housing society's word is final</b>
+        <p>Every flat sits inside a housing society with its own rules, and residents are expected to respect them. In any dispute involving the society or its members, the society's ruling is final and binding on all of us — owner included.</p>
+      </li>
+    </ol>
+
+    <div class="accept">
+      <p><strong>Booking a bed at Staytion means you've read and accepted these terms.</strong> Questions about any clause — or about the lock-in, deposit or add-ons for a specific room? <a href="https://wa.me/918591204793?text=Hey%2C%20I%20have%20a%20question%20about%20the%20terms">Ask us on WhatsApp</a> before you book; we'd rather explain now than surprise you later.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Staytion Coliving · Mumbai</span>
+    <span><a href="/">staytioncoliving.com</a> · <a href="https://wa.me/918591204793">+91 85912 04793</a></span>
+  </div>
+</footer>
+</body>
+</html>

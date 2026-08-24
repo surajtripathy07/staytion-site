@@ -269,6 +269,15 @@
     color: var(--chip-ink); max-width: 46em; margin-bottom: 28px;
   }
 
+  .btn-terms {
+    display: inline-flex; align-items: center;
+    border: 2px solid var(--ink); border-radius: 999px;
+    padding: 10px 22px; font-weight: 600; font-size: 15.5px;
+    text-decoration: none;
+  }
+  .btn-terms:hover { background: var(--ink); color: var(--ground); }
+  .btn-terms:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+
   /* Footer */
   footer { padding: 48px 0 64px; }
   footer .wrap { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
@@ -298,7 +307,7 @@
 <section class="hero" id="top">
   <div class="wrap">
     <div>
-      <h1>Your next stop:<br><span class="stop">Andheri East.</span></h1>
+      <h1>Your next stop:<br><span class="stop">Mumbai Suburbs.</span></h1>
       <p class="sub">Staytion runs 30+ fully managed coliving PGs across Andheri East and Powai — 300+ beds, zero brokerage, and a straight answer on WhatsApp within the day.</p>
       <div class="cta-row">
         <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">
@@ -434,41 +443,8 @@
   <div class="wrap">
     <p class="stopmark">Stop 05 · Terms</p>
     <h2>Terms &amp; conditions</h2>
-    <p class="draftnote">Draft for review — items marked <span class="chip">confirm</span> are standard-practice placeholders awaiting Staytion's actual figures before this page goes live.</p>
-    <ol>
-      <li>
-        <b>Booking &amp; token</b>
-        <p>A bed is held only after the booking token is paid. The token adjusts against your first month's rent. Token amount: <span class="chip">confirm</span>.</p>
-      </li>
-      <li>
-        <b>Security deposit</b>
-        <p>A refundable security deposit of <span class="chip">confirm — e.g. 2 months' rent</span> is payable before move-in. It is returned at move-out after deducting unpaid dues or damages, within <span class="chip">confirm</span> days.</p>
-      </li>
-      <li>
-        <b>Rent</b>
-        <p>Rent is payable monthly in advance, due by the <span class="chip">confirm — e.g. 5th</span> of each month. Late payment may attract a late fee of <span class="chip">confirm</span>.</p>
-      </li>
-      <li>
-        <b>Notice period</b>
-        <p>Moving out requires <span class="chip">confirm — e.g. 30 days'</span> written notice on WhatsApp. Leaving without notice forfeits the deposit to the extent of the notice-period rent.</p>
-      </li>
-      <li>
-        <b>What rent includes</b>
-        <p>Rent covers the furnished bed, housekeeping, Wi-Fi and building maintenance. Electricity is billed separately at actual usage, split fairly within the room <span class="chip">confirm method — e.g. sub-meter</span>. Laundry and meal plans are optional paid add-ons <span class="chip">confirm rates</span>.</p>
-      </li>
-      <li>
-        <b>House rules</b>
-        <p>Residents are expected to keep shared spaces clean and respect co-residents' quiet hours. Smoking and alcohol inside the premises: <span class="chip">confirm policy</span>. Damage to property is charged at actuals.</p>
-      </li>
-      <li>
-        <b>Guests &amp; visitors</b>
-        <p>Visitor policy and timings: <span class="chip">confirm</span>. Overnight guests are not permitted unless approved in advance by management.</p>
-      </li>
-      <li>
-        <b>Documents</b>
-        <p>Government photo ID and basic KYC details are required at move-in, as mandated for PG accommodation.</p>
-      </li>
-    </ol>
+    <p class="lede">Everything is on the table before you book — lock-in, notice, deposit settlement, what rent covers, and the shared-living code every resident keeps. Booking a bed confirms you've read them.</p>
+    <a class="btn-terms" href="/terms/">Read the house terms</a>
   </div>
 </section>
 
@@ -482,6 +458,7 @@
       <span>WhatsApp: <a href="https://wa.me/918591204793">+91 85912 04793</a></span>
       <span>Instagram: <a href="https://instagram.com/staytioncoliving">@staytioncoliving</a></span>
       <span>Email: <a href="mailto:staytioncoliving@gmail.com">staytioncoliving@gmail.com</a></span>
+      <span>Terms: <a href="/terms/">staytioncoliving.com/terms</a></span>
     </div>
   </div>
 </footer>
