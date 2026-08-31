@@ -146,6 +146,63 @@
   footer { padding: 40px 0 64px; }
   footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; color: var(--ink-soft); font-size: 15px; }
   footer a { color: var(--ink); }
+
+  /* Share button + menu */
+  .actions { display: flex; align-items: center; gap: 10px; }
+  .share { position: relative; }
+  .btn-share {
+    width: 42px; height: 42px; border-radius: 50%; padding: 0;
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    display: inline-flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .btn-share:hover, .btn-share[aria-expanded="true"] { border-color: var(--amber); color: var(--amber-ink); }
+  .btn-share:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+  .btn-share svg { width: 18px; height: 18px; }
+  .share-menu {
+    position: absolute; right: 0; top: calc(100% + 8px); z-index: 20;
+    min-width: 236px; padding: 6px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+  }
+  .share-menu[hidden] { display: none; }
+  .share-menu button {
+    display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+    background: none; border: 0; color: var(--ink); font: inherit; font-size: 15.5px; font-weight: 500;
+    padding: 10px 12px; border-radius: 8px; cursor: pointer;
+  }
+  .share-menu button:hover, .share-menu button:focus-visible { background: var(--amber-soft); outline: none; }
+  .share-menu button svg { width: 18px; height: 18px; color: var(--amber-ink); flex: none; }
+  .share-menu button small { display: block; font-size: 13px; font-weight: 400; color: var(--ink-soft); }
+  .accept .linkbtn {
+    background: none; border: 0; padding: 0; margin: 0; font: inherit; color: inherit;
+    text-decoration: underline; cursor: pointer;
+  }
+  .accept .linkbtn:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; z-index: 30;
+    transform: translateX(-50%) translateY(12px);
+    max-width: calc(100vw - 32px); padding: 10px 18px; border-radius: 999px;
+    background: var(--ink); color: var(--ground); font-size: 14.5px; text-align: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%); }
+
+  @media (max-width: 520px) {
+    .topbar .wrap { gap: 10px; }
+    .actions { gap: 8px; }
+    .brand { font-size: 21px; gap: 8px; }
+    .brand .dot { width: 12px; height: 12px; border-width: 2.5px; }
+    .btn-wa { font-size: 14px; padding: 9px 14px; gap: 7px; }
+    .btn-share { width: 38px; height: 38px; }
+  }
+
+  @media print {
+    .topbar, .toast { display: none; }
+    body { background: #fff; color: #000; font-size: 12pt; }
+    header.page { padding-top: 0; }
+    ol.clauses li { break-inside: avoid; }
+    section { break-inside: auto; }
+  }
 </style>
 </head>
 <body>
@@ -153,7 +210,28 @@
 <header class="topbar">
   <div class="wrap">
     <a class="brand" href="/"><span class="dot"></span>Staytion</a>
-    <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">WhatsApp us</a>
+    <div class="actions">
+      <div class="share" id="share">
+        <button class="btn-share" type="button" id="share-btn" aria-label="Share these terms" title="Share these terms" aria-haspopup="menu" aria-expanded="false" aria-controls="share-menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </button>
+        <div class="share-menu" id="share-menu" role="menu" aria-label="Share these terms" hidden>
+          <button type="button" role="menuitem" data-share="pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <span>Share as PDF<small>Best for keeping a record</small></span>
+          </button>
+          <button type="button" role="menuitem" data-share="text">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
+            <span>Share as text<small>Pastes straight into a chat</small></span>
+          </button>
+          <button type="button" role="menuitem" data-share="link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <span>Copy link<small>staytioncoliving.com/terms</small></span>
+          </button>
+        </div>
+      </div>
+      <a class="btn-wa" href="https://wa.me/918591204793?text=Hey%2C%20I%20am%20interested">WhatsApp us</a>
+    </div>
   </div>
 </header>
 
@@ -303,7 +381,7 @@
     </ol>
 
     <div class="accept">
-      <p><strong>Booking a bed at Staytion means you've read and accepted these terms.</strong> Questions about any clause — or about the lock-in, deposit or add-ons for a specific room? <a href="https://wa.me/918591204793?text=Hey%2C%20I%20have%20a%20question%20about%20the%20terms">Ask us on WhatsApp</a> before you book; we'd rather explain now than surprise you later.</p>
+      <p><strong>Booking a bed at Staytion means you've read and accepted these terms.</strong> Questions about any clause — or about the lock-in, deposit or add-ons for a specific room? <a href="https://wa.me/918591204793?text=Hey%2C%20I%20have%20a%20question%20about%20the%20terms">Ask us on WhatsApp</a> before you book; we'd rather explain now than surprise you later. Want a copy for your records? <button type="button" class="linkbtn" data-share="pdf">Save these terms as a PDF</button>.</p>
     </div>
   </div>
 </section>
@@ -314,5 +392,250 @@
     <span><a href="/">staytioncoliving.com</a> · <a href="https://wa.me/918591204793">+91 85912 04793</a></span>
   </div>
 </footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  var PAGE_URL = 'https://staytioncoliving.com/terms/';
+  var SHARE_TITLE = 'Staytion House Terms';
+  var FILE_NAME = 'Staytion-House-Terms.pdf';
+  // jsPDF is only fetched when someone asks for a PDF; the page itself stays dependency-free.
+  var JSPDF_SRC = 'https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js';
+  var JSPDF_SRI = 'sha384-en/ztfPSRkGfME4KIm05joYXynqzUgbsG5nMrj/xEFAHXkeZfO3yMK8QQ+mP7p1/';
+
+  var root = document.getElementById('share');
+  var btn = document.getElementById('share-btn');
+  var menu = document.getElementById('share-menu');
+  var toastEl = document.getElementById('toast');
+  var toastTimer = null;
+
+  function toast(msg, ms) {
+    clearTimeout(toastTimer);
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    toastTimer = setTimeout(hideToast, ms || 2600);
+  }
+  function hideToast() { toastEl.classList.remove('show'); }
+
+  /* ---------- menu ---------- */
+  function menuItems() { return Array.prototype.slice.call(menu.querySelectorAll('[role="menuitem"]')); }
+  function openMenu() {
+    menu.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    menuItems()[0].focus();
+    loadJsPDF().catch(function () {}); // warm the cache so "Share as PDF" is instant
+  }
+  function closeMenu(refocus) {
+    if (menu.hidden) return;
+    menu.hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+    if (refocus) btn.focus();
+  }
+  btn.addEventListener('click', function () { menu.hidden ? openMenu() : closeMenu(true); });
+  document.addEventListener('click', function (e) { if (!root.contains(e.target)) closeMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(true); });
+  menu.addEventListener('keydown', function (e) {
+    var items = menuItems(), i = items.indexOf(document.activeElement);
+    if (e.key === 'ArrowDown') { e.preventDefault(); items[(i + 1) % items.length].focus(); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); items[(i - 1 + items.length) % items.length].focus(); }
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-share]'), function (el) {
+    el.addEventListener('click', function () {
+      closeMenu(false);
+      var kind = el.getAttribute('data-share');
+      if (kind === 'pdf') sharePdf();
+      else if (kind === 'text') shareText();
+      else copyLink();
+    });
+  });
+
+  /* ---------- content: read straight from the page so shares never drift from it ---------- */
+  function txt(el) { return (el ? el.textContent : '').replace(/\s+/g, ' ').trim(); }
+  function readTerms() {
+    return {
+      brand: txt(document.querySelector('.eyebrow')),
+      title: txt(document.querySelector('header.page h1')),
+      intro: txt(document.querySelector('.intro')),
+      updated: txt(document.querySelector('.updated')),
+      sections: Array.prototype.map.call(document.querySelectorAll('section'), function (s) {
+        return {
+          heading: txt(s.querySelector('h2')),
+          note: txt(s.querySelector('p.note')),
+          clauses: Array.prototype.map.call(s.querySelectorAll('ol.clauses li'), function (li) {
+            return { n: li.getAttribute('data-n'), title: txt(li.querySelector('b')), body: txt(li.querySelector('p')) };
+          })
+        };
+      }),
+      accept: txt(document.querySelector('.accept strong'))
+    };
+  }
+
+  function buildText(t) {
+    var out = ['*' + t.brand.toUpperCase() + ' — ' + t.title.toUpperCase() + '*', t.updated, '', t.intro, ''];
+    t.sections.forEach(function (s) {
+      out.push('*' + s.heading.toUpperCase() + '*');
+      if (s.note) out.push('_' + s.note + '_');
+      out.push('');
+      s.clauses.forEach(function (c) {
+        out.push('*' + c.n + '. ' + c.title + '*');
+        out.push(c.body);
+        out.push('');
+      });
+    });
+    out.push('*' + t.accept + '*');
+    out.push('Full text online: ' + PAGE_URL);
+    out.push('Questions? WhatsApp +91 85912 04793');
+    return out.join('\n');
+  }
+
+  /* ---------- PDF ---------- */
+  var jspdfPromise = null;
+  function loadJsPDF() {
+    if (window.jspdf && window.jspdf.jsPDF) return Promise.resolve(window.jspdf.jsPDF);
+    if (!jspdfPromise) {
+      jspdfPromise = new Promise(function (resolve, reject) {
+        var s = document.createElement('script');
+        s.src = JSPDF_SRC; s.integrity = JSPDF_SRI; s.crossOrigin = 'anonymous'; s.async = true;
+        s.onload = function () {
+          if (window.jspdf && window.jspdf.jsPDF) resolve(window.jspdf.jsPDF);
+          else reject(new Error('jsPDF did not initialise'));
+        };
+        s.onerror = function () { jspdfPromise = null; reject(new Error('Could not load the PDF library')); };
+        document.head.appendChild(s);
+      });
+    }
+    return jspdfPromise;
+  }
+
+  // jsPDF's built-in fonts can't draw the rupee sign; spell it out in the PDF.
+  function pdfSafe(s) { return s.replace(/₹\s?/g, 'Rs. ').replace(/ /g, ' '); }
+
+  function buildPdf(jsPDF, t) {
+    var doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    var W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+    var M = 18, maxW = W - M * 2, bottom = H - 20, y = M;
+    var INK = [27, 39, 51], SOFT = [74, 88, 102], AMBER = [138, 90, 0], LINE = [221, 225, 224];
+    var PT = 0.352778; // pt -> mm
+
+    function ensure(h) { if (y + h > bottom) { doc.addPage(); y = M; } }
+    function setStyle(size, style, color) { doc.setFont('helvetica', style || 'normal'); doc.setFontSize(size); doc.setTextColor(color[0], color[1], color[2]); }
+    function para(str, o) {
+      o = o || {};
+      var size = o.size || 10.5, indent = o.indent || 0, lh = size * PT * (o.lh || 1.4);
+      setStyle(size, o.style, o.color || INK);
+      var lines = doc.splitTextToSize(pdfSafe(str), maxW - indent);
+      for (var i = 0; i < lines.length; i++) { ensure(lh); doc.text(lines[i], M + indent, y); y += lh; }
+      y += (o.gap == null ? 1.5 : o.gap);
+    }
+    function rule() { doc.setDrawColor(LINE[0], LINE[1], LINE[2]); doc.setLineWidth(0.2); doc.line(M, y, W - M, y); }
+
+    doc.setProperties({ title: SHARE_TITLE, subject: 'House terms for all Staytion homes', author: 'Staytion Coliving', creator: 'staytioncoliving.com' });
+
+    // Title block
+    setStyle(9, 'bold', AMBER); doc.text(t.brand.toUpperCase(), M, y); y += 8;
+    setStyle(26, 'bold', INK); doc.text(t.title, M, y); y += 8;
+    para(t.intro, { size: 10, color: SOFT });
+    para(t.updated, { size: 9, color: SOFT, gap: 4 });
+    rule(); y += 6;
+
+    t.sections.forEach(function (s) {
+      ensure(24);
+      y += 2;
+      para(s.heading, { size: 15, style: 'bold', gap: 1 });
+      if (s.note) para(s.note, { size: 9.5, style: 'italic', color: SOFT, gap: 2 });
+      s.clauses.forEach(function (c) {
+        ensure(16); // keep the number, title and first body line together
+        setStyle(12, 'bold', AMBER); doc.text(c.n, M, y);
+        para(c.title, { size: 10.5, style: 'bold', indent: 11, gap: 0.5 });
+        para(c.body, { size: 9.5, color: SOFT, indent: 11, gap: 2 });
+        rule(); y += 3;
+      });
+      y += 3;
+    });
+
+    ensure(18); y += 2;
+    para(t.accept, { size: 10.5, style: 'bold', gap: 1 });
+    para('Questions about any clause? WhatsApp +91 85912 04793 before you book.', { size: 9.5, color: SOFT });
+
+    // Footer on every page
+    var pages = doc.internal.getNumberOfPages();
+    var saved = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    for (var p = 1; p <= pages; p++) {
+      doc.setPage(p);
+      setStyle(8.5, 'normal', SOFT);
+      doc.text('Staytion Coliving · ' + PAGE_URL.replace('https://', '') + ' · saved ' + saved, M, H - 10);
+      doc.text('Page ' + p + ' of ' + pages, W - M, H - 10, { align: 'right' });
+    }
+    return doc;
+  }
+
+  function download(blob, name) {
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = name; a.rel = 'noopener';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+  }
+
+  function sharePdf() {
+    toast('Preparing PDF…', 10000);
+    loadJsPDF().then(function (jsPDF) {
+      var blob = buildPdf(jsPDF, readTerms()).output('blob');
+      var file;
+      try { file = new File([blob], FILE_NAME, { type: 'application/pdf' }); } catch (e) { file = null; }
+      if (file && navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        return navigator.share({ files: [file], title: SHARE_TITLE, text: SHARE_TITLE + ' — ' + PAGE_URL })
+          .then(function () { hideToast(); })
+          .catch(function (err) {
+            // Cancelled: fine. Anything else (e.g. the user-gesture window
+            // expired while jsPDF fetched): the PDF is built — hand it over.
+            if (err && err.name === 'AbortError') { hideToast(); return; }
+            download(blob, FILE_NAME);
+            toast('PDF downloaded — attach it in WhatsApp');
+          });
+      }
+      download(blob, FILE_NAME);
+      toast('PDF downloaded — attach it in WhatsApp');
+    }).catch(function (err) {
+      if (err && err.name === 'AbortError') { hideToast(); return; }
+      console.error(err);
+      toast('Could not create the PDF. Use Print → Save as PDF instead.', 5000);
+    });
+  }
+
+  function shareText() {
+    var text = buildText(readTerms());
+    if (navigator.share) {
+      navigator.share({ title: SHARE_TITLE, text: text })
+        .then(hideToast)
+        .catch(function (err) {
+          if (err && err.name === 'AbortError') return;
+          copyToClipboard(text, 'Terms copied as text — paste them into WhatsApp');
+        });
+      return;
+    }
+    copyToClipboard(text, 'Terms copied as text — paste them into WhatsApp');
+  }
+
+  function copyLink() { copyToClipboard(PAGE_URL, 'Link copied'); }
+
+  function copyToClipboard(text, doneMsg) {
+    var fallback = function () {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      ta.remove();
+      toast(ok ? doneMsg : 'Copy failed — select the text and copy it manually', 4000);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast(doneMsg); }, fallback);
+    } else fallback();
+  }
+})();
+</script>
 </body>
 </html>
