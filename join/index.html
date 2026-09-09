@@ -519,11 +519,20 @@
     invite = res[0];
     if (!invite || !invite.status) { show('s-invalid'); return; }
     if (invite.owner_flat_ids && invite.owner_flat_ids.length) {
-      // invite bound to a licensor: offer only that licensor's homes
+      // invite bound to a licensor: that licensor's homes first, every other
+      // home still listed below (fallback — the owner's card flags a mismatch)
       var allow = {}; invite.owner_flat_ids.forEach(function (id) { allow[id] = true; });
-      flats = flats.filter(function (fl) { return allow[fl.id]; });
-      var sel = $('flat_id'); sel.innerHTML = '';
-      loadFlatsInto(sel, flats);
+      var mine = flats.filter(function (fl) { return allow[fl.id]; });
+      var others = flats.filter(function (fl) { return !allow[fl.id]; });
+      var sel = $('flat_id'); sel.innerHTML = '<option value="">Choose your home…</option>';
+      var og1 = document.createElement('optgroup'); og1.label = 'Hosted by ' + (invite.host || 'your host');
+      mine.forEach(function (f) { var o = document.createElement('option'); o.value = f.id; o.textContent = f.name + (f.area ? ' · ' + f.area : ''); og1.appendChild(o); });
+      sel.appendChild(og1);
+      if (others.length) {
+        var og2 = document.createElement('optgroup'); og2.label = 'Other Staytion homes';
+        others.forEach(function (f) { var o = document.createElement('option'); o.value = f.id; o.textContent = f.name + (f.area ? ' · ' + f.area : ''); og2.appendChild(o); });
+        sel.appendChild(og2);
+      }
     }
     if (invite.status === 'rejected' || invite.status === 'error') { show('s-invalid'); return; }
     if (invite.status !== 'invited' && invite.status !== 'submitted') { renderSummary(invite); return; }
