@@ -306,24 +306,33 @@
 
     <div class="card">
       <p class="stop">Stop 06 · Documents</p>
-      <h2>Two uploads, that's all</h2>
-      <p class="note">These go to your host for the police verification Mumbai requires. <b>Do not upload your Aadhaar</b> — the eSign already verifies you against it.</p>
+      <h2>Four uploads</h2>
+      <p class="note">These go to your host for the police verification Mumbai requires. Clear photos or scans; JPG, PNG or PDF, under 5 MB each. Your Aadhaar number must be readable — the police form needs it.</p>
       <div class="grid">
         <div class="field full">
-          <label for="photo">Passport-size photo <span class="hint">(JPG/PNG, under 5 MB)</span></label>
+          <label for="photo">Passport-size photo <span class="hint">(JPG/PNG)</span></label>
           <input id="photo" name="photo" type="file" accept="image/jpeg,image/png">
           <span class="sub" id="photo-sub"></span>
         </div>
-        <div class="field full">
-          <label for="id_doc">One government ID — PAN, Voter ID or Driving licence <span class="hint">(JPG/PNG/PDF)</span></label>
-          <input id="id_doc" name="id_doc" type="file" accept="image/jpeg,image/png,application/pdf">
-          <span class="sub" id="id-sub"></span>
+        <div class="field">
+          <label for="aadhaar">Aadhaar card — front</label>
+          <input id="aadhaar" name="aadhaar" type="file" accept="image/jpeg,image/png,application/pdf">
+          <span class="sub" id="aadhaar-sub"></span>
         </div>
-        <div class="field full">
-          <label for="id_type">Which ID is that?</label>
-          <select id="id_type" name="id_type" required>
-            <option value="">Choose…</option><option value="PAN">PAN card</option><option value="VOTER">Voter ID</option><option value="DL">Driving licence</option><option value="PASSPORT">Passport</option>
-          </select>
+        <div class="field">
+          <label for="aadhaar_back">Aadhaar card — back <span class="hint">(if your address is on the back)</span></label>
+          <input id="aadhaar_back" name="aadhaar_back" type="file" accept="image/jpeg,image/png,application/pdf">
+          <span class="sub" id="aadhaar_back-sub"></span>
+        </div>
+        <div class="field">
+          <label for="pan">PAN card</label>
+          <input id="pan" name="pan" type="file" accept="image/jpeg,image/png,application/pdf">
+          <span class="sub" id="pan-sub"></span>
+        </div>
+        <div class="field">
+          <label for="work_id">Work or college ID <span class="hint">(ID card, offer letter or student ID)</span></label>
+          <input id="work_id" name="work_id" type="file" accept="image/jpeg,image/png,application/pdf">
+          <span class="sub" id="work_id-sub"></span>
         </div>
       </div>
     </div>
@@ -338,7 +347,7 @@
       <div style="height:12px"></div>
       <div class="field full check">
         <input id="agree_privacy" name="agree_privacy" type="checkbox" required>
-        <label for="agree_privacy">I consent to Staytion storing these details to prepare my agreement and for police verification, and to sharing my name, mobile, email and the agreement text with Leegality (the eSign provider) so it can send me the signing link and my signed copy. Staytion does not collect my Aadhaar number.</label>
+        <label for="agree_privacy">I consent to Staytion storing these details to prepare my agreement and for police verification, and to sharing my name, mobile, email and the agreement text with Leegality (the eSign provider) so it can send me the signing link and my signed copy. My Aadhaar, PAN and ID copies are used only for the agreement and police verification.</label>
       </div>
       <div class="hp" aria-hidden="true">
         <label for="website">Website</label>
@@ -391,7 +400,9 @@
     });
   }
 
-  var invite = null, flats = [], existingPaths = { photo: null, id: null };
+  var invite = null, flats = [];
+  var FILE_KINDS = ['photo', 'aadhaar', 'aadhaar_back', 'pan', 'work_id'];
+  var existingFiles = {};
 
   // ---- flats + room types -------------------------------------------------
   function loadFlats() {
@@ -437,7 +448,7 @@
   // ---- hydrate / summary ---------------------------------------------------
   var TEXT_FIELDS = ['salutation','full_name','email','dob','gender','guardian_name','perm_address','perm_city','perm_state','perm_pincode',
     'employer','designation','office_address','ec1_name','ec1_relation','ec1_phone','ec2_name','ec2_relation','ec2_phone',
-    'flat_id','move_in','lockin_months','rent','deposit','notice_days','id_type'];
+    'flat_id','move_in','lockin_months','rent','deposit','notice_days'];
 
   function hydrate(p) {
     TEXT_FIELDS.forEach(function (k) { if (p[k] !== undefined && p[k] !== null && $(k)) $(k).value = p[k]; });
@@ -517,9 +528,8 @@
     if (invite.invite_email) $('email').value = invite.invite_email;
     if (invite.status === 'submitted') {
       hydrate(invite.payload || {});
-      existingPaths.photo = invite.photo_path || null; existingPaths.id = invite.id_doc_path || null;
-      if (existingPaths.photo) $('photo-sub').innerHTML = '<span class="ok">Uploaded ✓</span> — choose a file only to replace it';
-      if (existingPaths.id) $('id-sub').innerHTML = '<span class="ok">Uploaded ✓</span> — choose a file only to replace it';
+      existingFiles = invite.files || {};
+      FILE_KINDS.forEach(function (k) { if (existingFiles[k]) $(k + '-sub').innerHTML = '<span class="ok">Uploaded ✓</span> — choose a file only to replace it'; });
       $('edit-alert').hidden = false; $('submit-btn').textContent = 'Save changes';
       $('title').textContent = 'Edit your details';
     }
@@ -555,11 +565,13 @@
       var bad = form.querySelector(':invalid'); if (bad) { bad.focus(); bad.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
       return fail('A few fields still need attention — check the highlighted one.');
     }
-    var photo, idDoc;
-    try { photo = fileOk($('photo'), ['image/jpeg', 'image/png']); idDoc = fileOk($('id_doc'), ['image/jpeg', 'image/png', 'application/pdf']); }
+    var IMG = ['image/jpeg', 'image/png'], DOC = ['image/jpeg', 'image/png', 'application/pdf'];
+    var LABEL = { photo: 'passport-size photo', aadhaar: 'Aadhaar card (front)', aadhaar_back: 'Aadhaar card (back)', pan: 'PAN card', work_id: 'work or college ID' };
+    var picked = {};
+    try { FILE_KINDS.forEach(function (k) { picked[k] = fileOk($(k), k === 'photo' ? IMG : DOC); }); }
     catch (e) { return fail(e.message); }
-    if (!photo && !existingPaths.photo) return fail('Please upload your passport-size photo.');
-    if (!idDoc && !existingPaths.id) return fail('Please upload one government ID (PAN, Voter ID or Driving licence).');
+    var missing = FILE_KINDS.filter(function (k) { return k !== 'aadhaar_back' && !picked[k] && !existingFiles[k]; });
+    if (missing.length) return fail('Please upload your ' + missing.map(function (k) { return LABEL[k]; }).join(', ') + '.');
     var mi = new Date($('move_in').value), today = new Date(); today.setHours(0, 0, 0, 0);
     if (mi < new Date(today.getTime() - 60 * 86400000)) return fail('Move-in date looks too far in the past — check it.');
 
@@ -576,11 +588,10 @@
     payload.submitted_from = 'join-page v1';
 
     $('submit-btn').disabled = true; $('progress').textContent = 'Uploading documents…';
-    var pPhoto = photo ? upload('photo', photo) : Promise.resolve(existingPaths.photo);
-    var pId = idDoc ? upload('id', idDoc) : Promise.resolve(existingPaths.id);
-    Promise.all([pPhoto, pId]).then(function (paths) {
+    Promise.all(FILE_KINDS.map(function (k) { return picked[k] ? upload(k, picked[k]) : Promise.resolve(existingFiles[k] || null); })).then(function (paths) {
+      var files = {}; FILE_KINDS.forEach(function (k, i) { files[k] = paths[i]; });
       $('progress').textContent = 'Saving…';
-      return rpc('submit_intake', { p_token: token, p_payload: payload, p_photo_path: paths[0], p_id_doc_path: paths[1] });
+      return rpc('submit_intake', { p_token: token, p_payload: payload, p_files: files });
     }).then(function () {
       $('submit-btn').disabled = false; $('progress').textContent = '';
       show('s-done');
