@@ -109,6 +109,33 @@
     <div class="card"><p class="note" style="margin:0">Opening your invite…</p></div>
   </section>
 
+  <form class="screen" id="s-gate" hidden novalidate>
+    <div class="card">
+      <p class="stop">Before we start</p>
+      <h2 id="gate-title">Joining a Staytion home</h2>
+      <p class="note">Three details to open your personal form. Your host confirms everything before any agreement is prepared.</p>
+      <div id="gate-alert" class="alert bad" hidden></div>
+      <div class="grid">
+        <div class="field full">
+          <label for="g_name">Full name <span class="hint">(as on your government ID)</span></label>
+          <input id="g_name" name="g_name" required minlength="3" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="g_phone">Mobile <span class="hint">(WhatsApp — the signing link goes here)</span></label>
+          <input id="g_phone" name="g_phone" inputmode="tel" required pattern="[+0-9 ]{10,16}" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="g_email">Email <span class="hint">(your signed copy goes here)</span></label>
+          <input id="g_email" name="g_email" type="email" required autocomplete="email">
+        </div>
+      </div>
+      <div class="actions" style="margin-bottom:0">
+        <button class="btn" type="submit" id="gate-btn">Open my form</button>
+        <span class="sub">Already started? Use the same mobile number and we'll bring your saved form back.</span>
+      </div>
+    </div>
+  </form>
+
   <section class="screen" id="s-invalid" hidden>
     <div class="card">
       <h2>This link isn't active</h2>
@@ -342,11 +369,14 @@
   var MAX_BYTES = 5 * 1024 * 1024;
 
   var $ = function (id) { return document.getElementById(id); };
-  var screens = ['s-loading', 's-invalid', 's-summary', 's-done', 's-form'];
+  var screens = ['s-loading', 's-gate', 's-invalid', 's-summary', 's-done', 's-form'];
   function show(id) { screens.forEach(function (s) { $(s).hidden = (s !== id); }); window.scrollTo(0, 0); }
 
-  var token = (new URLSearchParams(location.search).get('t') || '').trim().toLowerCase();
-  if (!/^[0-9a-f]{32}$/.test(token)) { show('s-invalid'); return; }
+  var qs = new URLSearchParams(location.search);
+  var token = (qs.get('t') || '').trim().toLowerCase();
+  var ownerToken = (qs.get('o') || '').trim().toLowerCase();
+  var HEX32 = /^[0-9a-f]{32}$/;
+  if (!HEX32.test(token) && !HEX32.test(ownerToken)) { show('s-invalid'); return; }
 
   var headers = { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY };
   function rpc(fn, body) {
@@ -369,15 +399,18 @@
       .then(function (r) { return r.ok ? r.json() : []; })
       .then(function (rows) {
         flats = rows || [];
-        var sel = $('flat_id'); sel.innerHTML = '<option value="">Choose your home…</option>';
-        var byArea = {};
-        flats.forEach(function (f) { (byArea[f.area || 'Other'] = byArea[f.area || 'Other'] || []).push(f); });
-        Object.keys(byArea).sort().forEach(function (area) {
-          var og = document.createElement('optgroup'); og.label = area;
-          byArea[area].forEach(function (f) { var o = document.createElement('option'); o.value = f.id; o.textContent = f.name; og.appendChild(o); });
-          sel.appendChild(og);
-        });
+        loadFlatsInto($('flat_id'), flats);
       });
+  }
+  function loadFlatsInto(sel, list) {
+    sel.innerHTML = '<option value="">Choose your home…</option>';
+    var byArea = {};
+    list.forEach(function (f) { (byArea[f.area || 'Other'] = byArea[f.area || 'Other'] || []).push(f); });
+    Object.keys(byArea).sort().forEach(function (area) {
+      var og = document.createElement('optgroup'); og.label = area;
+      byArea[area].forEach(function (f) { var o = document.createElement('option'); o.value = f.id; o.textContent = f.name; og.appendChild(o); });
+      sel.appendChild(og);
+    });
   }
   function roomLabel(rt) { return rt.sharing + '-sharing ' + (rt.has_ac ? 'AC' : 'non-AC'); }
   function roomKey(rt) { return rt.sharing + (rt.has_ac ? 'ac' : 'nonac'); }
@@ -439,10 +472,44 @@
   }
   function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
+  // ---- owner link gate: name + mobile + email → personal token ---------------
+  // /join/?o=<owner token> is a standing link an owner forwards to anyone
+  // joining one of their homes (decision C, 2026-09-09). open_invite mints the
+  // same per-resident token the agent would, or hands back the one already
+  // open for that mobile; then we continue exactly as /join/?t=.
+  function gate() {
+    rpc('get_owner_link', { p_token: ownerToken }).then(function (o) {
+      if (!o || !o.host) { show('s-invalid'); return; }
+      $('gate-title').textContent = 'Joining a Staytion home hosted by ' + o.host;
+      show('s-gate');
+    }).catch(function () { show('s-invalid'); });
+  }
+  $('s-gate').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var f = ev.target; $('gate-alert').hidden = true;
+    if (!f.checkValidity()) { var bad = f.querySelector(':invalid'); if (bad) bad.focus(); return; }
+    $('gate-btn').disabled = true;
+    rpc('open_invite', { p_token: ownerToken, p_name: $('g_name').value, p_phone: $('g_phone').value, p_email: $('g_email').value })
+      .then(function (r) {
+        token = r.token;
+        try { history.replaceState(null, '', location.pathname + '?t=' + token); } catch (e) { /* ignore */ }
+        boot();
+      })
+      .catch(function (e) { $('gate-btn').disabled = false; var a = $('gate-alert'); a.textContent = e.message; a.hidden = false; });
+  });
+
   // ---- boot ----------------------------------------------------------------
+  function boot() {
   Promise.all([rpc('get_invite', { p_token: token }), loadFlats()]).then(function (res) {
     invite = res[0];
     if (!invite || !invite.status) { show('s-invalid'); return; }
+    if (invite.owner_flat_ids && invite.owner_flat_ids.length) {
+      // invite bound to a licensor: offer only that licensor's homes
+      var allow = {}; invite.owner_flat_ids.forEach(function (id) { allow[id] = true; });
+      flats = flats.filter(function (fl) { return allow[fl.id]; });
+      var sel = $('flat_id'); sel.innerHTML = '';
+      loadFlatsInto(sel, flats);
+    }
     if (invite.status === 'rejected' || invite.status === 'error') { show('s-invalid'); return; }
     if (invite.status !== 'invited' && invite.status !== 'submitted') { renderSummary(invite); return; }
     $('full_name').value = invite.invite_name || '';
@@ -458,6 +525,8 @@
     }
     show('s-form');
   }).catch(function () { show('s-invalid'); });
+  }
+  if (HEX32.test(token)) boot(); else gate();
 
   // ---- submit --------------------------------------------------------------
   function fail(msg) { var a = $('form-alert'); a.textContent = msg; a.hidden = false; a.scrollIntoView({ behavior: 'smooth', block: 'center' }); $('submit-btn').disabled = false; $('progress').textContent = ''; }
