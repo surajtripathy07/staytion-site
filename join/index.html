@@ -468,7 +468,7 @@
       method: 'POST', headers: Object.assign({ 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'false' }, headers), body: file
     }).then(function (r) {
       if (!r.ok) return r.text().then(function (t) { throw new Error('Upload failed (' + r.status + '): ' + (t || '').slice(0, 120)); });
-      return path.slice(token.length + 1); // path within the token folder is what the RPC checks
+      return path; // <token>/<file> — the RPC insists the folder is this token
     });
   }
   function fileOk(input, allow) {
