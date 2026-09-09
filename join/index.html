@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Join Staytion — your details</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+  :root {
+    --ground: #FAFAF7; --surface: #FFFFFF; --ink: #1B2733; --ink-soft: #4A5866;
+    --line: #DDE1E0; --amber: #D98E04; --amber-ink: #8A5A00; --amber-soft: #FBF3DF;
+    --navy: #1B2733; --navy-contrast: #F5F7F6; --wa: #128C50; --wa-ink: #FFFFFF;
+    --bad: #B42318; --bad-soft: #FDECEA; --ok: #128C50; --ok-soft: #E6F4EC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #10161D; --surface: #18202A; --ink: #E8EAE6; --ink-soft: #9AA7B2;
+      --line: #2A3540; --amber: #F2B33D; --amber-ink: #F2B33D; --amber-soft: #2A2417;
+      --navy: #E8EAE6; --navy-contrast: #131A22; --wa: #1DA35F;
+      --bad: #F08A80; --bad-soft: #3A1B18; --ok: #4CC38A; --ok-soft: #14301F;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #10161D; --surface: #18202A; --ink: #E8EAE6; --ink-soft: #9AA7B2;
+    --line: #2A3540; --amber: #F2B33D; --amber-ink: #F2B33D; --amber-soft: #2A2417;
+    --navy: #E8EAE6; --navy-contrast: #131A22; --wa: #1DA35F;
+    --bad: #F08A80; --bad-soft: #3A1B18; --ok: #4CC38A; --ok-soft: #14301F;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: "Barlow", "Helvetica Neue", Arial, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3 { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; line-height: 1.08; margin: 0; }
+  a { color: inherit; }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  .topbar { position: sticky; top: 0; z-index: 10; background: var(--ground); border-bottom: 1px solid var(--line); }
+  .topbar .wrap { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; gap: 12px; }
+  .brand { font-family: "Barlow Condensed", sans-serif; font-weight: 700; font-size: 24px; letter-spacing: .04em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 9px; }
+  .brand .dot { width: 13px; height: 13px; border-radius: 50%; background: var(--amber); border: 3px solid var(--ink); flex: none; }
+  .topbar .help { font-size: 14px; color: var(--ink-soft); text-decoration: none; }
+  header.page { padding: 40px 0 22px; }
+  .eyebrow { display: flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--amber-ink); margin: 0 0 10px; }
+  .eyebrow::before { content: ""; width: 11px; height: 11px; border-radius: 50%; background: var(--amber); flex: none; }
+  header.page h1 { font-size: clamp(38px, 8vw, 56px); font-weight: 700; text-transform: uppercase; }
+  header.page p { color: var(--ink-soft); margin: 12px 0 0; max-width: 40em; }
+  .screen[hidden] { display: none !important; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px 20px; margin: 0 0 18px; }
+  .card h2 { font-size: 26px; font-weight: 600; margin-bottom: 4px; }
+  .card .stop { font-family: "Barlow Condensed", sans-serif; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--amber-ink); margin: 0 0 10px; }
+  .card > p.note { color: var(--ink-soft); font-size: 15px; margin: 0 0 14px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .field { display: grid; gap: 5px; }
+  .field.full { grid-column: 1 / -1; }
+  label { font-size: 14px; font-weight: 600; color: var(--ink-soft); letter-spacing: .01em; }
+  label .hint { font-weight: 400; }
+  input, select, textarea { width: 100%; font: inherit; color: var(--ink); background: var(--ground); border: 1.5px solid var(--line); border-radius: 8px; padding: 11px 12px; min-height: 46px; }
+  textarea { min-height: 84px; resize: vertical; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; border-color: var(--amber); }
+  input[readonly] { color: var(--ink-soft); background: var(--surface); border-style: dashed; }
+  input[type="file"] { padding: 9px 12px; }
+  .money { position: relative; }
+  .money input { padding-left: 30px; }
+  .money::before { content: "₹"; position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--ink-soft); font-weight: 600; }
+  .sub { font-size: 13.5px; color: var(--ink-soft); }
+  .ok { color: var(--ok); font-weight: 600; }
+  .check { display: flex; gap: 12px; align-items: flex-start; font-size: 15.5px; color: var(--ink); }
+  .check input { width: 22px; height: 22px; min-height: 0; margin: 2px 0 0; flex: none; accent-color: var(--amber); }
+  .check label { font-weight: 400; color: var(--ink); font-size: 15.5px; }
+  .actions { display: grid; gap: 10px; margin: 6px 0 40px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; background: var(--wa); color: var(--wa-ink); font-weight: 600; font-size: 17px; padding: 14px 22px; border-radius: 999px; border: none; cursor: pointer; text-decoration: none; }
+  .btn:disabled { opacity: .55; cursor: wait; }
+  .btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--ink); }
+  .alert { border-radius: 10px; padding: 12px 14px; font-size: 15.5px; margin: 0 0 16px; }
+  .alert.bad { background: var(--bad-soft); color: var(--bad); border: 1px solid color-mix(in srgb, var(--bad) 35%, transparent); }
+  .alert.good { background: var(--ok-soft); color: var(--ok); border: 1px solid color-mix(in srgb, var(--ok) 35%, transparent); }
+  .board { background: var(--navy); color: var(--navy-contrast); border-radius: 10px; padding: 18px 20px; font-family: "Barlow Condensed", sans-serif; display: grid; gap: 9px; margin: 0 0 18px; }
+  .board .row { display: flex; justify-content: space-between; gap: 18px; font-size: 18px; letter-spacing: .05em; text-transform: uppercase; border-bottom: 1px dashed color-mix(in srgb, var(--navy-contrast) 25%, transparent); padding-bottom: 8px; }
+  .board .row:last-child { border-bottom: none; padding-bottom: 0; }
+  .board .row b { font-weight: 600; color: var(--amber); text-align: right; }
+  .hp { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .steps { display: grid; gap: 8px; counter-reset: s; margin: 14px 0 0; padding: 0; list-style: none; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: start; color: var(--ink-soft); font-size: 15.5px; }
+  .steps li::before { content: counter(s, decimal-leading-zero); font-family: "Barlow Condensed", sans-serif; font-size: 22px; font-weight: 700; color: var(--amber); line-height: 1.1; }
+  footer { padding: 30px 0 48px; color: var(--ink-soft); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="/"><span class="dot"></span>Staytion</a>
+    <a class="help" href="https://wa.me/918591204793?text=Hi%2C%20I%20have%20a%20question%20about%20my%20join%20form">Need help? WhatsApp us</a>
+  </div>
+</header>
+
+<header class="page">
+  <div class="wrap">
+    <p class="eyebrow">Welcome aboard</p>
+    <h1 id="title">Your details</h1>
+    <p id="lede">Ten minutes, once. Your host confirms these details, then you sign the accommodation agreement on your phone with an Aadhaar OTP — no printing, no paperwork.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="screen" id="s-loading">
+    <div class="card"><p class="note" style="margin:0">Opening your invite…</p></div>
+  </section>
+
+  <section class="screen" id="s-invalid" hidden>
+    <div class="card">
+      <h2>This link isn't active</h2>
+      <p class="note">Join links come from your Staytion host and are valid for 7 days. Ask your host for a fresh one — it takes them ten seconds.</p>
+      <a class="btn" href="https://wa.me/918591204793?text=Hi%2C%20my%20join%20link%20isn%27t%20working">Message Staytion on WhatsApp</a>
+    </div>
+  </section>
+
+  <section class="screen" id="s-summary" hidden>
+    <div class="card">
+      <h2 id="sum-title">Your details are confirmed</h2>
+      <p class="note" id="sum-note">Ask your host if something needs changing.</p>
+      <div class="board" id="sum-board"></div>
+      <p class="sub" id="sum-foot"></p>
+    </div>
+  </section>
+
+  <section class="screen" id="s-done" hidden>
+    <div class="card">
+      <h2>Thanks — that's everything from you</h2>
+      <p class="note">Your host will confirm the details and you'll get a signing link on WhatsApp and email. Keep this link if you need to fix anything before that.</p>
+      <ol class="steps">
+        <li>Your host checks the stay details you entered.</li>
+        <li>Leegality sends you the agreement to sign with an Aadhaar OTP (WhatsApp + email).</li>
+        <li>The signed copy lands in your inbox. Move in on your date.</li>
+      </ol>
+    </div>
+  </section>
+
+  <form class="screen" id="s-form" hidden novalidate autocomplete="on">
+    <div id="form-alert" class="alert bad" hidden></div>
+    <div id="edit-alert" class="alert good" hidden>You've already submitted — change anything below and press <b>Save changes</b>.</div>
+
+    <div class="card">
+      <p class="stop">Stop 01 · Identity</p>
+      <h2>Who you are</h2>
+      <p class="note">Exactly as on your government ID — the eSign checks the name against your Aadhaar record.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="salutation">Salutation</label>
+          <select id="salutation" name="salutation" required>
+            <option value="">Choose…</option><option>MR</option><option>MS</option><option>MRS</option><option>MX</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="full_name">Full name</label>
+          <input id="full_name" name="full_name" required minlength="3" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="phone">Mobile <span class="hint">(from your invite)</span></label>
+          <input id="phone" name="phone" readonly tabindex="-1">
+        </div>
+        <div class="field">
+          <label for="email">Email <span class="hint">(signing link + signed copy go here)</span></label>
+          <input id="email" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="dob">Date of birth</label>
+          <input id="dob" name="dob" type="date" required>
+        </div>
+        <div class="field">
+          <label for="age">Age</label>
+          <input id="age" name="age" readonly tabindex="-1" placeholder="—">
+        </div>
+        <div class="field">
+          <label for="gender">Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="">Choose…</option><option value="F">Female</option><option value="M">Male</option><option value="O">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="guardian_name">Father's / mother's name</label>
+          <input id="guardian_name" name="guardian_name" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="stop">Stop 02 · Permanent address</p>
+      <h2>Home address</h2>
+      <div class="grid">
+        <div class="field full">
+          <label for="perm_address">Address</label>
+          <textarea id="perm_address" name="perm_address" required autocomplete="street-address"></textarea>
+        </div>
+        <div class="field">
+          <label for="perm_city">City</label>
+          <input id="perm_city" name="perm_city" required autocomplete="address-level2">
+        </div>
+        <div class="field">
+          <label for="perm_state">State</label>
+          <input id="perm_state" name="perm_state" required autocomplete="address-level1">
+        </div>
+        <div class="field">
+          <label for="perm_pincode">PIN code</label>
+          <input id="perm_pincode" name="perm_pincode" inputmode="numeric" pattern="[1-9][0-9]{5}" required autocomplete="postal-code">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="stop">Stop 03 · Work or study</p>
+      <h2>Where you spend your days</h2>
+      <div class="grid">
+        <div class="field">
+          <label for="employer">Company / college</label>
+          <input id="employer" name="employer" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label for="designation">Designation / course</label>
+          <input id="designation" name="designation" required autocomplete="organization-title">
+        </div>
+        <div class="field full">
+          <label for="office_address">Office / campus address</label>
+          <textarea id="office_address" name="office_address" required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="stop">Stop 04 · Emergency contacts</p>
+      <h2>Two people we can call</h2>
+      <div class="grid">
+        <div class="field"><label for="ec1_name">Contact 1 · name</label><input id="ec1_name" name="ec1_name" required></div>
+        <div class="field"><label for="ec1_relation">Relation</label><input id="ec1_relation" name="ec1_relation" required placeholder="Father, sister, friend…"></div>
+        <div class="field full"><label for="ec1_phone">Mobile</label><input id="ec1_phone" name="ec1_phone" inputmode="tel" required pattern="[+0-9 ]{10,16}"></div>
+        <div class="field"><label for="ec2_name">Contact 2 · name</label><input id="ec2_name" name="ec2_name" required></div>
+        <div class="field"><label for="ec2_relation">Relation</label><input id="ec2_relation" name="ec2_relation" required></div>
+        <div class="field full"><label for="ec2_phone">Mobile</label><input id="ec2_phone" name="ec2_phone" inputmode="tel" required pattern="[+0-9 ]{10,16}"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="stop">Stop 05 · Your stay</p>
+      <h2>What you agreed with your host</h2>
+      <p class="note">Enter exactly what you and your host settled on. Your host confirms these before the agreement is prepared.</p>
+      <div class="grid">
+        <div class="field full">
+          <label for="flat_id">Staytion home</label>
+          <select id="flat_id" name="flat_id" required><option value="">Loading homes…</option></select>
+        </div>
+        <div class="field full">
+          <label for="room_type">Room type</label>
+          <select id="room_type" name="room_type" required disabled><option value="">Pick a home first</option></select>
+        </div>
+        <div class="field">
+          <label for="move_in">Move-in date</label>
+          <input id="move_in" name="move_in" type="date" required>
+        </div>
+        <div class="field">
+          <label for="lockin_months">Lock-in <span class="hint">(months)</span></label>
+          <input id="lockin_months" name="lockin_months" type="number" min="0" max="12" value="6" required>
+        </div>
+        <div class="field">
+          <label for="rent">Monthly rent <span class="hint">— as agreed with your host</span></label>
+          <div class="money"><input id="rent" name="rent" type="number" inputmode="numeric" min="1000" max="100000" step="1" required></div>
+        </div>
+        <div class="field">
+          <label for="deposit">Security deposit</label>
+          <div class="money"><input id="deposit" name="deposit" type="number" inputmode="numeric" min="0" max="300000" step="1" required></div>
+        </div>
+        <div class="field">
+          <label for="notice_days">Notice period <span class="hint">(days)</span></label>
+          <input id="notice_days" name="notice_days" type="number" min="0" max="90" value="30" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="stop">Stop 06 · Documents</p>
+      <h2>Two uploads, that's all</h2>
+      <p class="note">These go to your host for the police verification Mumbai requires. <b>Do not upload your Aadhaar</b> — the eSign already verifies you against it.</p>
+      <div class="grid">
+        <div class="field full">
+          <label for="photo">Passport-size photo <span class="hint">(JPG/PNG, under 5 MB)</span></label>
+          <input id="photo" name="photo" type="file" accept="image/jpeg,image/png">
+          <span class="sub" id="photo-sub"></span>
+        </div>
+        <div class="field full">
+          <label for="id_doc">One government ID — PAN, Voter ID or Driving licence <span class="hint">(JPG/PNG/PDF)</span></label>
+          <input id="id_doc" name="id_doc" type="file" accept="image/jpeg,image/png,application/pdf">
+          <span class="sub" id="id-sub"></span>
+        </div>
+        <div class="field full">
+          <label for="id_type">Which ID is that?</label>
+          <select id="id_type" name="id_type" required>
+            <option value="">Choose…</option><option value="PAN">PAN card</option><option value="VOTER">Voter ID</option><option value="DL">Driving licence</option><option value="PASSPORT">Passport</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="stop">Stop 07 · Consent</p>
+      <h2>Two boxes to tick</h2>
+      <div class="field full check">
+        <input id="agree_terms" name="agree_terms" type="checkbox" required>
+        <label for="agree_terms">I have read the <a href="/terms/" target="_blank" rel="noopener">Staytion house terms</a>; they form part of my accommodation agreement.</label>
+      </div>
+      <div style="height:12px"></div>
+      <div class="field full check">
+        <input id="agree_privacy" name="agree_privacy" type="checkbox" required>
+        <label for="agree_privacy">I consent to Staytion storing these details to prepare my agreement and for police verification, and to sharing my name, mobile, email and the agreement text with Leegality (the eSign provider) so it can send me the signing link and my signed copy. Staytion does not collect my Aadhaar number.</label>
+      </div>
+      <div class="hp" aria-hidden="true">
+        <label for="website">Website</label>
+        <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="submit" id="submit-btn">Submit my details</button>
+      <span class="sub" id="progress"></span>
+    </div>
+  </form>
+
+</main>
+
+<footer>
+  <div class="wrap">Staytion Coliving · Mumbai · <a href="/terms/">House terms</a> · <a href="https://wa.me/918591204793">+91 85912 04793</a></div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  // Public by design: the anon key can only call get_invite / submit_intake,
+  // read public_intake_flats, and upload under an open invite token.
+  var SUPABASE_URL = 'https://aegzmlgihealxzojifji.supabase.co';
+  var ANON_KEY = 'sb_publishable__Ftwn9zbEkdYb-OuqiWrrQ_w30pEgqe';
+  var BUCKET = 'agreement-intake';
+  var MAX_BYTES = 5 * 1024 * 1024;
+
+  var $ = function (id) { return document.getElementById(id); };
+  var screens = ['s-loading', 's-invalid', 's-summary', 's-done', 's-form'];
+  function show(id) { screens.forEach(function (s) { $(s).hidden = (s !== id); }); window.scrollTo(0, 0); }
+
+  var token = (new URLSearchParams(location.search).get('t') || '').trim().toLowerCase();
+  if (!/^[0-9a-f]{32}$/.test(token)) { show('s-invalid'); return; }
+
+  var headers = { 'apikey': ANON_KEY, 'Authorization': 'Bearer ' + ANON_KEY };
+  function rpc(fn, body) {
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/' + fn, {
+      method: 'POST', headers: Object.assign({ 'Content-Type': 'application/json' }, headers), body: JSON.stringify(body)
+    }).then(function (r) {
+      return r.text().then(function (t) {
+        var data = null; try { data = t ? JSON.parse(t) : null; } catch (e) { data = t; }
+        if (!r.ok) { var msg = (data && (data.message || data.hint)) || ('Request failed (' + r.status + ')'); throw new Error(msg); }
+        return data;
+      });
+    });
+  }
+
+  var invite = null, flats = [], existingPaths = { photo: null, id: null };
+
+  // ---- flats + room types -------------------------------------------------
+  function loadFlats() {
+    return fetch(SUPABASE_URL + '/rest/v1/public_intake_flats?select=id,name,area,room_types', { headers: headers })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (rows) {
+        flats = rows || [];
+        var sel = $('flat_id'); sel.innerHTML = '<option value="">Choose your home…</option>';
+        var byArea = {};
+        flats.forEach(function (f) { (byArea[f.area || 'Other'] = byArea[f.area || 'Other'] || []).push(f); });
+        Object.keys(byArea).sort().forEach(function (area) {
+          var og = document.createElement('optgroup'); og.label = area;
+          byArea[area].forEach(function (f) { var o = document.createElement('option'); o.value = f.id; o.textContent = f.name; og.appendChild(o); });
+          sel.appendChild(og);
+        });
+      });
+  }
+  function roomLabel(rt) { return rt.sharing + '-sharing ' + (rt.has_ac ? 'AC' : 'non-AC'); }
+  function roomKey(rt) { return rt.sharing + (rt.has_ac ? 'ac' : 'nonac'); }
+  function fillRoomTypes(flatId, keep) {
+    var sel = $('room_type'); sel.innerHTML = '';
+    var f = flats.filter(function (x) { return x.id === flatId; })[0];
+    if (!f) { sel.disabled = true; sel.innerHTML = '<option value="">Pick a home first</option>'; return; }
+    sel.disabled = false;
+    sel.innerHTML = '<option value="">Choose…</option>';
+    (f.room_types || []).forEach(function (rt) { var o = document.createElement('option'); o.value = roomKey(rt); o.textContent = roomLabel(rt); sel.appendChild(o); });
+    if (keep) sel.value = keep;
+  }
+  $('flat_id').addEventListener('change', function () { fillRoomTypes(this.value); });
+
+  // ---- age from DOB --------------------------------------------------------
+  function calcAge() {
+    var v = $('dob').value; if (!v) { $('age').value = ''; return; }
+    var d = new Date(v), n = new Date(); var a = n.getFullYear() - d.getFullYear();
+    if (n < new Date(n.getFullYear(), d.getMonth(), d.getDate())) a--;
+    $('age').value = (a >= 0 && a < 120) ? a : '';
+  }
+  $('dob').addEventListener('change', calcAge);
+
+  // ---- hydrate / summary ---------------------------------------------------
+  var TEXT_FIELDS = ['salutation','full_name','email','dob','gender','guardian_name','perm_address','perm_city','perm_state','perm_pincode',
+    'employer','designation','office_address','ec1_name','ec1_relation','ec1_phone','ec2_name','ec2_relation','ec2_phone',
+    'flat_id','move_in','lockin_months','rent','deposit','notice_days','id_type'];
+
+  function hydrate(p) {
+    TEXT_FIELDS.forEach(function (k) { if (p[k] !== undefined && p[k] !== null && $(k)) $(k).value = p[k]; });
+    fillRoomTypes(p.flat_id, p.room_type);
+    calcAge();
+    $('agree_terms').checked = !!p.agree_terms; $('agree_privacy').checked = !!p.agree_privacy;
+  }
+  function money(n) { return n == null ? '—' : '₹' + Number(n).toLocaleString('en-IN'); }
+  function renderSummary(inv) {
+    var s = inv.summary || {};
+    var rows = [
+      ['Home', (s.flat || '—') + (s.area ? ' · ' + s.area : '')],
+      ['Room', s.sharing ? s.sharing + '-sharing ' + (s.has_ac ? 'AC' : 'non-AC') : '—'],
+      ['Rent', money(s.rent) + ' / month'], ['Deposit', money(s.deposit)],
+      ['Move-in', s.move_in || '—'], ['Lock-in', s.lockin_months != null ? s.lockin_months + ' months' : '—']
+    ];
+    $('sum-board').innerHTML = rows.map(function (r) { return '<div class="row"><span>' + r[0] + '</span><b>' + esc(String(r[1])) + '</b></div>'; }).join('');
+    if (s.signed) {
+      $('sum-title').textContent = 'Signed and done';
+      $('sum-note').textContent = 'Your signed copy is in your email (and on WhatsApp from Leegality). Welcome home.';
+      $('sum-foot').textContent = '';
+    } else if (inv.status === 'sent') {
+      $('sum-title').textContent = 'Your agreement is waiting for your signature';
+      $('sum-note').textContent = 'Check WhatsApp and email for the Leegality signing link — it takes two minutes with an Aadhaar OTP.';
+      $('sum-foot').textContent = 'Need something changed first? Ask your host before you sign.';
+    } else {
+      $('sum-title').textContent = 'Your details are confirmed';
+      $('sum-note').textContent = 'Your host has confirmed these. Ask your host if something needs changing — the signing link follows shortly.';
+      $('sum-foot').textContent = '';
+    }
+    show('s-summary');
+  }
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // ---- boot ----------------------------------------------------------------
+  Promise.all([rpc('get_invite', { p_token: token }), loadFlats()]).then(function (res) {
+    invite = res[0];
+    if (!invite || !invite.status) { show('s-invalid'); return; }
+    if (invite.status === 'rejected' || invite.status === 'error') { show('s-invalid'); return; }
+    if (invite.status !== 'invited' && invite.status !== 'submitted') { renderSummary(invite); return; }
+    $('full_name').value = invite.invite_name || '';
+    $('phone').value = invite.invite_phone || '';
+    if (invite.invite_email) $('email').value = invite.invite_email;
+    if (invite.status === 'submitted') {
+      hydrate(invite.payload || {});
+      existingPaths.photo = invite.photo_path || null; existingPaths.id = invite.id_doc_path || null;
+      if (existingPaths.photo) $('photo-sub').innerHTML = '<span class="ok">Uploaded ✓</span> — choose a file only to replace it';
+      if (existingPaths.id) $('id-sub').innerHTML = '<span class="ok">Uploaded ✓</span> — choose a file only to replace it';
+      $('edit-alert').hidden = false; $('submit-btn').textContent = 'Save changes';
+      $('title').textContent = 'Edit your details';
+    }
+    show('s-form');
+  }).catch(function () { show('s-invalid'); });
+
+  // ---- submit --------------------------------------------------------------
+  function fail(msg) { var a = $('form-alert'); a.textContent = msg; a.hidden = false; a.scrollIntoView({ behavior: 'smooth', block: 'center' }); $('submit-btn').disabled = false; $('progress').textContent = ''; }
+  function extOf(file) { var t = file.type; return t === 'image/png' ? 'png' : t === 'application/pdf' ? 'pdf' : 'jpg'; }
+  function upload(kind, file) {
+    var path = token + '/' + kind + '-' + Date.now() + '.' + extOf(file);
+    return fetch(SUPABASE_URL + '/storage/v1/object/' + BUCKET + '/' + path, {
+      method: 'POST', headers: Object.assign({ 'Content-Type': file.type || 'application/octet-stream', 'x-upsert': 'false' }, headers), body: file
+    }).then(function (r) {
+      if (!r.ok) return r.text().then(function (t) { throw new Error('Upload failed (' + r.status + '): ' + (t || '').slice(0, 120)); });
+      return path.slice(token.length + 1); // path within the token folder is what the RPC checks
+    });
+  }
+  function fileOk(input, allow) {
+    var f = input.files && input.files[0]; if (!f) return null;
+    if (f.size > MAX_BYTES) throw new Error('"' + f.name + '" is over 5 MB — please pick a smaller file.');
+    if (allow.indexOf(f.type) < 0) throw new Error('"' + f.name + '" must be ' + (allow.length === 3 ? 'a JPG, PNG or PDF' : 'a JPG or PNG') + '.');
+    return f;
+  }
+
+  $('s-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    $('form-alert').hidden = true;
+    var form = ev.target;
+    if (!form.checkValidity()) {
+      var bad = form.querySelector(':invalid'); if (bad) { bad.focus(); bad.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      return fail('A few fields still need attention — check the highlighted one.');
+    }
+    var photo, idDoc;
+    try { photo = fileOk($('photo'), ['image/jpeg', 'image/png']); idDoc = fileOk($('id_doc'), ['image/jpeg', 'image/png', 'application/pdf']); }
+    catch (e) { return fail(e.message); }
+    if (!photo && !existingPaths.photo) return fail('Please upload your passport-size photo.');
+    if (!idDoc && !existingPaths.id) return fail('Please upload one government ID (PAN, Voter ID or Driving licence).');
+    var mi = new Date($('move_in').value), today = new Date(); today.setHours(0, 0, 0, 0);
+    if (mi < new Date(today.getTime() - 60 * 86400000)) return fail('Move-in date looks too far in the past — check it.');
+
+    var payload = {};
+    TEXT_FIELDS.forEach(function (k) { payload[k] = $(k).value.trim ? $(k).value.trim() : $(k).value; });
+    var f = flats.filter(function (x) { return x.id === payload.flat_id; })[0];
+    payload.flat_name = f ? f.name : null; payload.flat_area = f ? f.area : null;
+    payload.room_type = $('room_type').value;
+    var rt = f && (f.room_types || []).filter(function (r) { return roomKey(r) === payload.room_type; })[0];
+    payload.sharing = rt ? rt.sharing : null; payload.has_ac = rt ? !!rt.has_ac : null;
+    ['lockin_months', 'rent', 'deposit', 'notice_days', 'age'].forEach(function (k) { payload[k] = $(k).value === '' ? null : Number($(k).value); });
+    payload.phone = $('phone').value; payload.agree_terms = true; payload.agree_privacy = true;
+    payload.website = $('website').value; // honeypot — server drops it
+    payload.submitted_from = 'join-page v1';
+
+    $('submit-btn').disabled = true; $('progress').textContent = 'Uploading documents…';
+    var pPhoto = photo ? upload('photo', photo) : Promise.resolve(existingPaths.photo);
+    var pId = idDoc ? upload('id', idDoc) : Promise.resolve(existingPaths.id);
+    Promise.all([pPhoto, pId]).then(function (paths) {
+      $('progress').textContent = 'Saving…';
+      return rpc('submit_intake', { p_token: token, p_payload: payload, p_photo_path: paths[0], p_id_doc_path: paths[1] });
+    }).then(function () {
+      $('submit-btn').disabled = false; $('progress').textContent = '';
+      show('s-done');
+    }).catch(function (e) { fail(e.message || 'Something went wrong — please try again.'); });
+  });
+})();
+</script>
+</body>
+</html>
