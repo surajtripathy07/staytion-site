@@ -190,7 +190,7 @@
         </div>
         <div class="field">
           <label for="email">Email <span class="hint">(signing link + signed copy go here)</span></label>
-          <input id="email" name="email" type="email" required autocomplete="email">
+          <input id="email" name="email" type="email" required autocomplete="off">
         </div>
         <div class="field">
           <label for="dob">Date of birth</label>
@@ -586,7 +586,8 @@
     var missing = FILE_KINDS.filter(function (k) { return k !== 'aadhaar_back' && !picked[k] && !existingFiles[k]; });
     if (missing.length) return fail('Please upload your ' + missing.map(function (k) { return LABEL[k]; }).join(', ') + '.');
     var mi = new Date($('move_in').value), today = new Date(); today.setHours(0, 0, 0, 0);
-    if (mi < new Date(today.getTime() - 60 * 86400000)) return fail('Move-in date looks too far in the past — check it.');
+    var minMoveIn = new Date(today); minMoveIn.setMonth(minMoveIn.getMonth() - 10);
+    if (mi < minMoveIn) return fail('Move-in date looks too far in the past — check it.');
 
     var payload = {};
     TEXT_FIELDS.forEach(function (k) { payload[k] = $(k).value.trim ? $(k).value.trim() : $(k).value; });
