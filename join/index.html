@@ -324,6 +324,10 @@
           <span class="sub" id="aadhaar-sub"></span>
         </div>
         <div class="field full">
+          <label for="aadhaar_number">Aadhaar number <span class="hint">(12 digits, as printed on the card)</span></label>
+          <input id="aadhaar_number" name="aadhaar_number" inputmode="numeric" maxlength="14" autocomplete="off" placeholder="1234 5678 9012" required>
+        </div>
+        <div class="field full">
           <label for="aadhaar_back">Aadhaar card — back <span class="hint">(if your address is on the back)</span></label>
           <input id="aadhaar_back" name="aadhaar_back" type="file" accept="image/jpeg,image/png,application/pdf">
           <span class="sub" id="aadhaar_back-sub"></span>
@@ -332,6 +336,10 @@
           <label for="pan">PAN card</label>
           <input id="pan" name="pan" type="file" accept="image/jpeg,image/png,application/pdf">
           <span class="sub" id="pan-sub"></span>
+        </div>
+        <div class="field full">
+          <label for="pan_number">PAN number <span class="hint">(10 characters, like ABCDE1234F)</span></label>
+          <input id="pan_number" name="pan_number" autocapitalize="characters" maxlength="10" autocomplete="off" spellcheck="false" placeholder="ABCDE1234F" required>
         </div>
         <div class="field full">
           <label for="work_id">Work or college ID <span class="hint">(ID card, offer letter or student ID)</span></label>
@@ -585,6 +593,10 @@
     catch (e) { return fail(e.message); }
     var missing = FILE_KINDS.filter(function (k) { return k !== 'aadhaar_back' && !picked[k] && !existingFiles[k]; });
     if (missing.length) return fail('Please upload your ' + missing.map(function (k) { return LABEL[k]; }).join(', ') + '.');
+    var aadhaarNo = $('aadhaar_number').value.replace(/[\s-]/g, '');
+    if (!/^[0-9]{12}$/.test(aadhaarNo)) { $('aadhaar_number').focus(); return fail('Aadhaar number must be exactly 12 digits — check it against your card.'); }
+    var panNo = $('pan_number').value.trim().toUpperCase();
+    if (!/^[A-Z]{5}[0-9]{4}[A-Z]$/.test(panNo)) { $('pan_number').focus(); return fail('PAN number must look like ABCDE1234F — 5 letters, 4 digits, 1 letter.'); }
     var mi = new Date($('move_in').value), today = new Date(); today.setHours(0, 0, 0, 0);
     var minMoveIn = new Date(today); minMoveIn.setMonth(minMoveIn.getMonth() - 10);
     if (mi < minMoveIn) return fail('Move-in date looks too far in the past — check it.');
@@ -605,7 +617,7 @@
     Promise.all(FILE_KINDS.map(function (k) { return picked[k] ? upload(k, picked[k]) : Promise.resolve(existingFiles[k] || null); })).then(function (paths) {
       var files = {}; FILE_KINDS.forEach(function (k, i) { files[k] = paths[i]; });
       $('progress').textContent = 'Saving…';
-      return rpc('submit_intake', { p_token: token, p_payload: payload, p_files: files });
+      return rpc('submit_intake', { p_token: token, p_payload: payload, p_files: files, p_aadhaar_number: aadhaarNo, p_pan_number: panNo });
     }).then(function () {
       $('submit-btn').disabled = false; $('progress').textContent = '';
       show('s-done');
